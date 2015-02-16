@@ -14,7 +14,7 @@ angularChat.config(['$routeProvider',
         	templateUrl: 'src/partials/room.html',
         	controller: 'RoomController'
       	}).
-        when('/rooms', {
+        when('/rooms/:userID', {
           templateUrl: 'src/partials/rooms.html',
           controller: 'RoomsController'
         }).
