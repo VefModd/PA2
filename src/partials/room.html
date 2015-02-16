@@ -1,4 +1,5 @@
-<h1>Room <span>{{roomID}}</span></h1>
+<!--
+<h1>Room <span>{{ roomID }}</span></h1>
 <div class="well">Chat gluggi</div>
 <div>
 	<a href="#" class="btn btn-default">Leave room</a>
@@ -10,5 +11,37 @@
 		<span class="input-group-btn">
 			<button class="btn btn-default" type="button">Send</button>
     	</span>
+	</div>
+</div>
+-->
+
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<h1>Room {{ roomID }}!</h3>
+			<div class="panel panel-default">
+				<div class="panel-heading">Chat:</div>
+				<div class="panel-body">
+					<ul class="list-group">
+						<li class="list-group-item" ng-repeat="message in messages">
+							<span class="badge">{{ message.nick }}</span>
+							{{ message.message }}
+						</li>
+					</ul>
+					<div class="form-group col-md-6">
+						<div class="input-group">
+							<span class="input-group-addon">$</span>
+							<input type="text" class="form-control" placeholder="Write a message here...">
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button">Send</button>
+							</span>
+						</div>
+					</div>
+					<!-- TODO  -->
+					<button type="button" class="btn btn-primary">Leave room</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
