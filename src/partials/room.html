@@ -27,8 +27,9 @@
     <div class="panel panel-default">
         <div class="panel-heading">Roommates:</div>
         <div class="panel-body">
-            List of guests...
-
+            <ul>
+                <li ng-repeat="mate in roommates">{{ mate }}</li>
+            </ul>
         </div>
     </div>
 </div>

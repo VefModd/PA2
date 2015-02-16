@@ -31,8 +31,11 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
 				console.log("yes");
 				socket.on('updatechat', function(room, messageHistory) {
 					$scope.messages = messageHistory;
-					console.log("messageHistory: ", messageHistory);
 				});
+                socket.on('updateusers', function(room, userList, opList) {
+                    console.log(userList);
+                    $scope.roommates = userList;
+                });
 			} else {
 				console.log("no");
 			}
