@@ -1,24 +1,20 @@
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<h1>Welcome, {{currentUser}}!</h3>
-			<div class="panel panel-default">
-				<div class="panel-heading">Active chat rooms:</div>
-				<div class="panel-body">
-					<ul class="list-group">
-						<li class="list-group-item" ng-repeat="room in rooms">
-							<span class="badge">{{ room.topic }}</span>
-							<a ng-href="#/room/{{currentUser}}/{{room}}">{{ room }}</a>
-						</li>
-						<li class="list-group-item">
-							<span class="badge">þetta er möödddarspjall</span>
-							<a ng-href="#/room/{{currentUser}}/{{room}}">whaaggt</a>
-						</li>
-					</ul>
-					<!--<button type="button" class="btn btn-primary" ng-click="newRoom()">Create a new room</button> -->
-					<button type="button" class="btn btn-primary">Create a new room</button>
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="col-md-8 col-md-offset-2">
+    <h1>Welcome, {{currentUser}}!</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Active chat rooms:</div>
+        <div class="panel-body">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="room in rooms">
+                <span class="badge">{{ room.topic }}</span>
+                <a ng-href="#/room/{{currentUser}}/{{room}}">{{ room }}</a>
+                </li>
+                <li class="list-group-item">
+                <span class="badge">þetta er möödddarspjall</span>
+                <a ng-href="#/room/{{currentUser}}/{{room}}">whaaggt</a>
+                </li>
+            </ul>
+            <!--<button type="button" class="btn btn-primary" ng-click="newRoom()">Create a new room</button> -->
+            <button type="button" class="btn btn-primary">Create a new room</button>
+        </div>
+    </div>
 </div>
