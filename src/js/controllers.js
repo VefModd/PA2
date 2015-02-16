@@ -20,12 +20,34 @@ chatControllers.controller('HomeController', ['$scope', '$http', '$location', '$
 		};
 	}]);
 
-chatControllers.controller('RoomController', ['$scope', '$routeParams',
-	function ($scope, $routeParams) {
-  		$scope.roomID = $routeParams.roomID;
-  	}]);
+chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket',
+	function ($scope, $routeParams, socket) {
+		$scope.roomID = $routeParams.roomID;
+		$scope.currentUser = $routeParams.userID;
+		var currRoom = {room: $routeParams.roomID, pass: undefined};
+		socket.emit('joinroom', currRoom, function(accepted) {
+			if(accepted) {
+				console.log("yes");
+			} else {
+				console.log("no");
+			}
+		});
+	}]);
 
-chatControllers.controller('RoomsController', ['$scope', '$routeParams',
-	function ($scope, $routeParams) {
-  		$scope.roomID = $routeParams.roomID;
-  	}]);
+chatControllers.controller('RoomsController', ['$scope', '$routeParams', 'socket',
+	function ($scope, $routeParams, socket) {
+		$scope.currentUser = $routeParams.userID;
+		socket.emit('rooms');
+		socket.on('roomlist', function(data) {
+			console.log(data);
+			$scope.rooms = Object.keys(data);
+			console.log(Object.keys(data));
+		});
+
+		/*
+		$scope.newRoom = function() {
+			var fknroom = {room: "Room number2", pass: undefined};
+			socket.emit('joinroom', fknroom);
+		};
+		*/
+	}]);

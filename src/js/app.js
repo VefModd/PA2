@@ -1,6 +1,6 @@
 var angularChat = angular.module('angularChat', [
-  'ngRoute',
-  'chatControllers'
+  'chatControllers',
+  'ngRoute'
 ]);
 
 angularChat.config(['$routeProvider',
@@ -10,11 +10,11 @@ angularChat.config(['$routeProvider',
         $routeProvider.
       	when('/home', {
         	templateUrl: 'src/partials/home.html',
-        controller: 'HomeController'
+          controller: 'HomeController'
       	}).
       	when('/room/:userID/:roomID', {
         	templateUrl: 'src/partials/room.html',
-        controller: 'RoomController'
+          controller: 'RoomController'
       	}).
         when('/rooms/:userID', {
           templateUrl: 'src/partials/rooms.html',
@@ -24,3 +24,5 @@ angularChat.config(['$routeProvider',
         	redirectTo: '/home'
       	});
  	}]);
+
+

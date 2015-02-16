@@ -1,1 +1,12 @@
 <h1>Rooms!!</h1>
+<span>{{ currentUser }}</span>
+
+
+<div>
+	<ul>
+		<li ng-repeat="room in rooms"><a ng-href="#/room/{{currentUser}}/{{room}}">{{ room }}</a></li>
+	</ul>
+</div>
+
+
+<!--<button type="button" class="btn btn-primary" ng-click="newRoom()">Create a new room</button> -->
