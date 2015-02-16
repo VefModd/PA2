@@ -11,7 +11,7 @@ chatControllers.controller('HomeController', ['$scope', '$http', '$location', '$
 			} else {
 				socket.emit('adduser', $scope.nickname, function(available) {
 					if(available) {
-						$location.path('/rooms');
+						$location.path('/rooms/' + $scope.nickname);
 					} else {
 						$scope.errorMsg = 'This nickname is already in use - please choose another!';
 					}
