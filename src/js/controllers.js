@@ -28,11 +28,10 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
 		socket.emit('joinroom', currRoom, function(accepted) {
 			if(accepted) {
 				console.log("yes");
-				//currRoom.addMessage("whatsup");
-				//currRoom.addMessage("sdfa");
-				//currRoom.addMessage("whhehesatsup");
-				$scope.messages = currRoom.messageHistory;
-				console.log($scope.messages);
+				socket.on('updatechat', function(room, messageHistory) {
+					$scope.messages = messageHistory;
+					console.log("messageHistory: ", messageHistory);
+				});
 			} else {
 				console.log("no");
 			}
