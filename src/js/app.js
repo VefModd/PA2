@@ -5,14 +5,15 @@ var angularChat = angular.module('angularChat', [
 
 angularChat.config(['$routeProvider',
 	function($routeProvider) {
-    	$routeProvider.
+
+        $routeProvider.
       	when('/home', {
         	templateUrl: 'src/partials/home.html',
-        	controller: 'HomeController'
+        controller: 'HomeController'
       	}).
-      	when('/room/:roomID', {
+      	when('/room/:userID/:roomID', {
         	templateUrl: 'src/partials/room.html',
-        	controller: 'RoomController'
+        controller: 'RoomController'
       	}).
         when('/rooms/:userID', {
           templateUrl: 'src/partials/rooms.html',
