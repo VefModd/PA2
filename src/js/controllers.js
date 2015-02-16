@@ -25,6 +25,7 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
 		$scope.roomID = $routeParams.roomID;
 		$scope.currentUser = $routeParams.userID;
 		var currRoom = {room: $scope.roomID, pass: undefined};
+
 		socket.emit('joinroom', currRoom, function(accepted) {
 			if(accepted) {
 				console.log("yes");
@@ -36,6 +37,23 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
 				console.log("no");
 			}
 		});
+
+		$scope.inputMsg = '';
+
+		$scope.sendMsg = function() {
+			console.log("inside sendMSg");
+			if($scope.inputMsg === '') {
+				console.log("inputmsg = ''");
+			} else {
+				console.log($scope.roomID);
+				var input = {roomName: $scope.roomID, msg: $scope.inputMsg};
+				socket.emit('sendmsg', input);
+				socket.on('updatechat', function(room, messageHistory) {
+					$scope.messages = messageHistory;
+					console.log("messageHistory: ", messageHistory);
+				});
+			}
+		};
 	}]);
 
 chatControllers.controller('RoomsController', ['$scope', '$routeParams', 'socket',
