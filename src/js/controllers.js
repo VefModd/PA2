@@ -50,3 +50,4 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', 'socket
 		};
 		*/
 	}]);
+
