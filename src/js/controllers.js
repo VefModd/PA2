@@ -1,6 +1,6 @@
 var chatControllers = angular.module('chatControllers', []);
 
-chatControllers.controller('HomeController', ['$scope', '$http', '$location', '$rootScope', '$routeParams',// 'socket',
+chatControllers.controller('HomeController', ['$scope', '$http', '$location', '$rootScope', '$routeParams', 'socket',
 	function ($scope, $http, $location, $rootScope, $routeParams, socket) {
 		$scope.errorMsg = '';
 		$scope.nickname = '';
