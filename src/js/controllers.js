@@ -43,7 +43,6 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', 'socket
 			$scope.rooms = Object.keys(data);
 			console.log(Object.keys(data));
 		});
-
 		/*
 		$scope.newRoom = function() {
 			var fknroom = {room: "Room number2", pass: undefined};
