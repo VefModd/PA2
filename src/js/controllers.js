@@ -11,7 +11,7 @@ chatControllers.controller('HomeController', ['$scope', '$http', '$location', '$
 			} else {
 				socket.emit('adduser', $scope.nickname, function(available) {
 					if(available) {
-						//$location.path('/rooms/' + $scope.nickname);
+						$location.path('/rooms');
 					} else {
 						$scope.errorMsg = 'This nickname is already in use - please choose another!';
 					}
@@ -21,6 +21,11 @@ chatControllers.controller('HomeController', ['$scope', '$http', '$location', '$
 	}]);
 
 chatControllers.controller('RoomController', ['$scope', '$routeParams',
+	function ($scope, $routeParams) {
+  		$scope.roomID = $routeParams.roomID;
+  	}]);
+
+chatControllers.controller('RoomsController', ['$scope', '$routeParams',
 	function ($scope, $routeParams) {
   		$scope.roomID = $routeParams.roomID;
   	}]);

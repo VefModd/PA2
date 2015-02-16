@@ -14,6 +14,10 @@ angularChat.config(['$routeProvider',
         	templateUrl: 'src/partials/room.html',
         	controller: 'RoomController'
       	}).
+        when('/rooms', {
+          templateUrl: 'src/partials/rooms.html',
+          controller: 'RoomsController'
+        }).
       	otherwise({
         	redirectTo: '/home'
       	});
