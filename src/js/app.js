@@ -5,8 +5,6 @@ var angularChat = angular.module('angularChat', [
 
 angularChat.config(['$routeProvider',
 	function($routeProvider) {
-
-
         $routeProvider.
       	when('/home', {
         	templateUrl: 'src/partials/home.html',
