@@ -24,10 +24,15 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
 	function ($scope, $routeParams, socket) {
 		$scope.roomID = $routeParams.roomID;
 		$scope.currentUser = $routeParams.userID;
-		var currRoom = {room: $routeParams.roomID, pass: undefined};
+		var currRoom = {room: $scope.roomID, pass: undefined};
 		socket.emit('joinroom', currRoom, function(accepted) {
 			if(accepted) {
 				console.log("yes");
+				//currRoom.addMessage("whatsup");
+				//currRoom.addMessage("sdfa");
+				//currRoom.addMessage("whhehesatsup");
+				$scope.messages = currRoom.messageHistory;
+				console.log($scope.messages);
 			} else {
 				console.log("no");
 			}
