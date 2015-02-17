@@ -56,6 +56,7 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
 					console.log("messageHistory: ", messageHistory);
 				});
 			}
+			$scope.inputMsg = '';
 		};
 	}]);
 
