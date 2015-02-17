@@ -71,9 +71,7 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
 		$scope.currentUser = $routeParams.userID;
 		socket.emit('rooms');
 		socket.on('roomlist', function(data) {
-			console.log(data);
 			$scope.rooms = Object.keys(data);
-			console.log(Object.keys(data));
 		});
 		
 		$scope.newRoom = function() {
@@ -81,6 +79,17 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
 			$location.path('/rooms/' + $scope.currentUser + '/newroom');
 			//var fknroom = {room: "Room number2", pass: undefined};
 			//socket.emit('joinroom', fknroom);
+		};
+
+		$scope.newRoomName = '';
+		$scope.newRoomTopic = '';
+		$scope.newRoomPass = '';
+		$scope.errorMsg = '';
+
+		$scope.createNewRoom = function() {
+			console.log("newRoomName: ", $scope.newRoomName);
+			console.log("newRoomTopic: ", $scope.newRoomTopic);
+			console.log("newRoomPass: ", $scope.newRoomPass);
 		};
 		
 	}]);
