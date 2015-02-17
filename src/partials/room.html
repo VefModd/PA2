@@ -7,7 +7,7 @@
             <div class="panel-heading">Chat:</div>
             <div class="panel-body">
                 <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="message in messages">
+                    <li class="list-group-item" ng-repeat="message in messages | orderBy:'timestamp'">
                     <span class="badge">{{ message.nick }}</span>
                     {{ message.message }}
                     </li>

@@ -25,11 +25,20 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
             $scope.roomID = $routeParams.roomID;
             $scope.filt = $scope.query;
             var currRoom = {room: $scope.roomID, pass: undefined};
+            var p_messages = [];
 
             socket.emit('joinroom', currRoom, function(accepted) {
                 if(accepted) {
                     socket.on('updatechat', function(room, messageHistory) {
                         $scope.messages = messageHistory;
+                    });
+                    socket.on('recv_privatemsg', function(sender, message) {
+                        var pm = {
+                            nick : sender,
+                            timestamp : new Date(),
+                            message : message.substring(0, 200)
+                        };
+                        p_messages.push(pm);
                     });
                     socket.on('updateusers', function(room, userList, opList) {
                         $scope.roommates = Object.keys(userList);
@@ -77,7 +86,7 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
 
             $scope.ban = function() {
             	console.log("ban this bitch please");
-            }
+            };
 
         }]);
 
