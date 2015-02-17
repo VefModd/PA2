@@ -60,13 +60,13 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
 
             $scope.leave = function () {
                 socket.emit('partroom', $scope.roomID);
-                $location.path('/rooms/' + $scope.currentUser);
+                $location.path('/rooms/' + $routeParams.userID);
             };
 
+            /*
             $scope.$on('$destroy', function() {
-                console.log("DESTROYING");
                 $scope.leave();
-            });
+            });*/
 
             $scope.kick = function(mate) {
             	$scope.userKicked = mate;
