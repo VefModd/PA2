@@ -1,38 +1,39 @@
 <div class="col-md-12 col-md-offset-1">
-	<div class="col-md-7">
-		<h1>Room {{ roomID }}!</h1>
-	</div>
-	<div class="col-md-7">
-	    <div class="panel panel-default">
-	        <div class="panel-heading">Chat:</div>
-	        <div class="panel-body">
-	            <ul class="list-group">
-	                <li class="list-group-item" ng-repeat="message in messages">
-	                <span class="badge">{{ message.nick }}</span>
-	                {{ message.message }}
-	                </li>
-	            </ul>
-	            <div class="form-group col-md-12">
-	                <div class="input-group">
-	                    <input type="text" class="form-control" id="inputMsg" name="inputMsg" ng-model="inputMsg" ng-keyup="$event.keyCode == 13 && sendMsg()" placeholder="Write a message here...">
-	                    <span class="input-group-btn">
-	                        <button class="btn btn-default" type="button" ng-click="sendMsg()">Send</button>
-	                    </span>
-	                </div>
-	            </div>
-	            <!-- TODO  -->
-	        </div>
-	    </div>
-	</div>
-	<div class="col-md-3">
-	    <div class="panel panel-default">
-	        <div class="panel-heading">Roommates:</div>
-	        <div class="panel-body">
-	            <ul class="list-group">
-	                <li class="list-group-item" ng-repeat="mate in roommates">{{ mate }}</li>
-	            </ul>
-	            <button type="button" class="btn btn-primary" ng-click="leave()">Leave room</button>
-	        </div>
-	    </div>
-	</div>
+    <div class="col-md-7">
+        <h1>Room {{ roomID }}!</h1>
+    </div>
+    <div class="col-md-7">
+        <div class="panel panel-default">
+            <div class="panel-heading">Chat:</div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="message in messages">
+                    <span class="badge">{{ message.nick }}</span>
+                    {{ message.message }}
+                    </li>
+                </ul>
+                <div class="form-group col-md-12">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="inputMsg" name="inputMsg" ng-model="inputMsg" ng-keyup="$event.keyCode == 13 && sendMsg()" placeholder="Write a message here...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" ng-click="sendMsg()">Send</button>
+                        </span>
+                    </div>
+                </div>
+                <!-- TODO  -->
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">Roommates:</div>
+            <div class="panel-body">
+                <input class="form-control" ng-model="query" placeholder="Search mates">
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="mate in roommates | filter:query"><i class="glyphicon glyphicon-pawn"></i> {{ mate }}</li>
+            </ul>
+            <button type="button" class="btn btn-primary" ng-click="leave()">Leave room</button>
+        </div>
+    </div>
 </div>
