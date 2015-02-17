@@ -62,8 +62,12 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                 $location.path('/rooms/' + $scope.currentUser);
             };
 
-            $scope.kick = function() {
-            	console.log("kick this bitch please");
+            $scope.kick = function(mate) {
+            	$scope.userKicked = mate;
+            	console.log("mate: ", mate);
+
+            	var kickObj = {user: mate, room: $scope.roomID};
+            	socket.emit('kick', kickObj);
             };
 
             $scope.ban = function() {
