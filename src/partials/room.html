@@ -33,8 +33,8 @@
             <ul class="list-group">
                 <li class="list-group-item" ng-repeat="mate in roommates | filter:query"><i class="glyphicon glyphicon-pawn"></i>
                     <span class="pull-right">
-                        <button type="button" class="btn btn-warning btn-xs" ng-click="">Kick</button>
-                        <button type="button" class="btn btn-danger btn-xs" ng-click="">Ban</button>
+                        <button type="button" class="btn btn-warning btn-xs" ng-click="kick()">Kick</button>
+                        <button type="button" class="btn btn-danger btn-xs" ng-click="ban()">Ban</button>
                     </span>
                     {{ mate }}
                 </li>
