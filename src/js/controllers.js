@@ -28,12 +28,10 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
 
             socket.emit('joinroom', currRoom, function(accepted) {
                 if(accepted) {
-                    console.log("yes");
                     socket.on('updatechat', function(room, messageHistory) {
                         $scope.messages = messageHistory;
                     });
                     socket.on('updateusers', function(room, userList, opList) {
-                        console.log(userList);
                         $scope.roommates = Object.keys(userList);
                     });
                 } else {

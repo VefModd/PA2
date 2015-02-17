@@ -31,7 +31,13 @@
                 <input class="form-control" ng-model="query" placeholder="Search mates">
             </div>
             <ul class="list-group">
-                <li class="list-group-item" ng-repeat="mate in roommates | filter:query"><i class="glyphicon glyphicon-pawn"></i> {{ mate }}</li>
+                <li class="list-group-item" ng-repeat="mate in roommates | filter:query"><i class="glyphicon glyphicon-pawn"></i>
+                    <span class="pull-right">
+                        <button type="button" class="btn btn-warning btn-xs" ng-click="">Kick</button>
+                        <button type="button" class="btn btn-danger btn-xs" ng-click="">Ban</button>
+                    </span>
+                    {{ mate }}
+                </li>
             </ul>
             <button type="button" class="btn btn-primary" ng-click="leave()">Leave room</button>
         </div>
