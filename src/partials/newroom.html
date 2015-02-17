@@ -1,13 +1,21 @@
 <div class="col-md-6 col-md-offset-3">
 	<h1>Create new room!</h1>
     <div class="panel panel-default">
-        <div class="panel-heading">Choose your nick:</div>
+        <div class="panel-heading">Create new room:</div>
         <div class="panel-body">
             <div class="form-group">
-                <label for="nickname" class="control-label">Nick-name</label>
-                <input type="text" class="form-control" id="nickname" name="nickname" ng-model="nickname" />
+                <label for="newRoomName" class="control-label">Room name</label>
+                <input type="text" class="form-control" id="newRoomName" name="newRoomName" ng-model="newRoomName" />
             </div>
-            <button type="button" class="btn btn-primary" ng-click="login()">Enter chat</button>
+            <div class="form-group">
+                <label for="newRoomTopic" class="control-label">Topic of the room</label>
+                <input type="text" class="form-control" id="newRoomTopic" name="newRoomTopic" ng-model="newRoomTopic" />
+            </div>
+            <div class="form-group">
+                <label for="newRoomPass" class="control-label">Password (not necessary)</label>
+                <input type="text" class="form-control" id="newRoomPass" name="newRoomPass" />
+            </div>
+            <button type="button" class="btn btn-primary">Finish</button>
         </div>
     </div>
 </div>
