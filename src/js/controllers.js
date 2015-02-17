@@ -59,8 +59,8 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
 		};
 	}]);
 
-chatControllers.controller('RoomsController', ['$scope', '$routeParams', 'socket',
-	function ($scope, $routeParams, socket) {
+chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$location', 'socket',
+	function ($scope, $routeParams, $location, socket) {
 		$scope.currentUser = $routeParams.userID;
 		socket.emit('rooms');
 		socket.on('roomlist', function(data) {
@@ -68,11 +68,13 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', 'socket
 			$scope.rooms = Object.keys(data);
 			console.log(Object.keys(data));
 		});
-		/*
+		
 		$scope.newRoom = function() {
-			var fknroom = {room: "Room number2", pass: undefined};
-			socket.emit('joinroom', fknroom);
+			console.log("inside new room");
+			$location.path('/rooms/' + $scope.currentUser + '/newroom');
+			//var fknroom = {room: "Room number2", pass: undefined};
+			//socket.emit('joinroom', fknroom);
 		};
-		*/
+		
 	}]);
 
