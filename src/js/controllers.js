@@ -77,23 +77,22 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
 		$scope.newRoom = function() {
 			console.log("inside new room");
 			$location.path('/rooms/' + $scope.currentUser + '/newroom');
-			//var fknroom = {room: "Room number2", pass: undefined};
-			//socket.emit('joinroom', fknroom);
 		};
 
 		$scope.newRoomName = '';
 		$scope.newRoomTopic = '';
-		$scope.newRoomPass = '';
+		$scope.newRoomPass = undefined;
 		$scope.errorMsg = '';
 
 		$scope.createNewRoom = function() {
 			if($scope.newRoomName === '') {
 				$scope.errorMsg = 'Please choose a name for the room!';
 			} else if($scope.newRoomTopic === '') {
-				console.log("what");
 				$scope.errorMsg = 'Please choose a topic for the room!';
 			} else {
-				
+				var newRoom = {room: $scope.newRoomName, pass: $scope.newRoomPass};
+				socket.emit('joinroom', newRoom);
+				$location.path('/room/' + $scope.currentUser + '/' + $scope.newRoomName);
 			}
 		};
 		
