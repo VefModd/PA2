@@ -20,8 +20,8 @@ chatControllers.controller('HomeController', ['$scope', '$http', '$location', '$
 		};
 	}]);
 
-chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket',
-	function ($scope, $routeParams, socket) {
+chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket', '$location',
+	function ($scope, $routeParams, socket, $location) {
 		$scope.roomID = $routeParams.roomID;
 		$scope.currentUser = $routeParams.userID;
 		var currRoom = {room: $scope.roomID, pass: undefined};
@@ -58,6 +58,12 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
 			}
 			$scope.inputMsg = '';
 		};
+
+		$scope.leave = function () {
+			socket.emit('partroom', $scope.roomID);
+			$location.path('/rooms/' + $scope.currentUser);
+		};
+
 	}]);
 
 chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$location', 'socket',

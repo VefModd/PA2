@@ -14,7 +14,7 @@
 	            </ul>
 	            <div class="form-group col-md-12">
 	                <div class="input-group">
-	                    <input type="text" class="form-control" id="inputMsg" name="inputMsg" ng-model="inputMsg" placeholder="Write a message here...">
+	                    <input type="text" class="form-control" id="inputMsg" name="inputMsg" ng-model="inputMsg" ng-keyup="$event.keyCode == 13 && sendMsg()" placeholder="Write a message here...">
 	                    <span class="input-group-btn">
 	                        <button class="btn btn-default" type="button" ng-click="sendMsg()">Send</button>
 	                    </span>
@@ -31,7 +31,7 @@
 	            <ul class="list-group">
 	                <li class="list-group-item" ng-repeat="mate in roommates">{{ mate }}</li>
 	            </ul>
-	            <button type="button" class="btn btn-primary">Leave room</button>
+	            <button type="button" class="btn btn-primary" ng-click="leave()">Leave room</button>
 	        </div>
 	    </div>
 	</div>
