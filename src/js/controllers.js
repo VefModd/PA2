@@ -87,9 +87,14 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
 		$scope.errorMsg = '';
 
 		$scope.createNewRoom = function() {
-			console.log("newRoomName: ", $scope.newRoomName);
-			console.log("newRoomTopic: ", $scope.newRoomTopic);
-			console.log("newRoomPass: ", $scope.newRoomPass);
+			if($scope.newRoomName === '') {
+				$scope.errorMsg = 'Please choose a name for the room!';
+			} else if($scope.newRoomTopic === '') {
+				console.log("what");
+				$scope.errorMsg = 'Please choose a topic for the room!';
+			} else {
+				
+			}
 		};
 		
 	}]);
