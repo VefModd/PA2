@@ -28,12 +28,10 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
 
             socket.emit('joinroom', currRoom, function(accepted) {
                 if(accepted) {
-                    console.log("yes");
                     socket.on('updatechat', function(room, messageHistory) {
                         $scope.messages = messageHistory;
                     });
                     socket.on('updateusers', function(room, userList, opList) {
-                        console.log(userList);
                         $scope.roommates = Object.keys(userList);
                         $scope.roomops = Object.keys(opList);
                     });
@@ -69,6 +67,19 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                 console.log("DESTROYING");
                 $scope.leave();
             });
+
+            $scope.kick = function(mate) {
+            	$scope.userKicked = mate;
+            	console.log("mate: ", mate);
+
+            	var kickObj = {user: mate, room: $scope.roomID};
+            	socket.emit('kick', kickObj);
+            };
+
+            $scope.ban = function() {
+            	console.log("ban this bitch please");
+            }
+
         }]);
 
 chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$location', 'socket',
