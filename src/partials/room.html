@@ -27,21 +27,21 @@
         <div class="panel panel-default">
             <div class="panel-heading">Roommates:</div>
             <div class="panel-body">
-                <input class="form-control" ng-model="query" placeholder="Search mates">
-            </div>
-            <ul class="list-group">
-                <li class="list-group-item" ng-repeat="op in roomops"> <i class="glyphicon glyphicon-king"></i> {{ op }} <a ng-click="suckMyDick()" class="glyphicon glyphicon-envelope"></a></li>
-            </ul>
-            <ul class="list-group">
-                <li class="list-group-item" ng-repeat="mate in roommates | filter:query"><i class="glyphicon glyphicon-pawn"></i> {{ mate }}
-                <span class="pull-right">
-                    <button type="button" class="btn btn-info btn-xs" ng-click="suckMyDick()"><i class="glyphicon glyphicon-envelope"></i></button>
-                    <button type="button" class="btn btn-warning btn-xs" ng-click="kick(mate)">Kick</button>
-                    <button type="button" class="btn btn-danger btn-xs" ng-click="ban()">Ban</button>
-                </span>
-                </li>
-            </ul>
+                <input class="form-control" ng-model="query" placeholder="Search mates...">
+	            <ul class="list-group">
+	                <li class="list-group-item" ng-repeat="op in roomops"> <i class="glyphicon glyphicon-king"></i> {{ op }} <a ng-click="suckMyDick()" class="glyphicon glyphicon-envelope"></a></li>
+	            </ul>
+	            <ul class="list-group">
+	                <li class="list-group-item" ng-repeat="mate in roommates | filter:query"><i class="glyphicon glyphicon-pawn"></i> {{ mate }}
+	                <span class="pull-right">
+	                    <button type="button" class="btn btn-info btn-xs" ng-click="suckMyDick()"><i class="glyphicon glyphicon-envelope"> PM</i></button>
+	                    <button type="button" class="btn btn-warning btn-xs" ng-click="kick(mate)">Kick</button>
+	                    <button type="button" class="btn btn-danger btn-xs" ng-click="ban()">Ban</button>
+	                </span>
+	                </li>
+	            </ul>
             <button type="button" class="btn btn-primary" ng-click="leave()">Leave room</button>
+            </div>
         </div>
     </div>
 </div>
