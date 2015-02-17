@@ -35,6 +35,7 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                     socket.on('updateusers', function(room, userList, opList) {
                         console.log(userList);
                         $scope.roommates = Object.keys(userList);
+                        $scope.roomops = Object.keys(opList);
                     });
                 } else {
                     console.log("no");
@@ -64,6 +65,10 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                 $location.path('/rooms/' + $scope.currentUser);
             };
 
+            $scope.$on('$destroy', function() {
+                console.log("DESTROYING");
+                $scope.leave();
+            });
         }]);
 
 chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$location', 'socket',
