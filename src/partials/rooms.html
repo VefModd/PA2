@@ -5,12 +5,11 @@
         <div class="panel-body">
             <ul class="list-group">
                 <li class="list-group-item" ng-repeat="room in rooms">
-                <span class="badge">{{ room.topic }}</span>
-                <a ng-href="#/room/{{currentUser}}/{{room}}">{{ room }}</a>
-                </li>
-                <li class="list-group-item">
-                <span class="badge">þetta er möödddarspjall</span>
-                <a ng-href="#/room/{{currentUser}}/{{room}}">whaaggt</a>
+                    <!-- rooms[room].banned[currentUser] !== undefined -->
+                    <div ng-if="rooms[room].banned[currentUser] === undefined">
+                        <span class="badge pull-right">{{ room.topic }}heh</span>
+                        <a ng-href="#/room/{{currentUser}}/{{room}}">{{ room }}</a>
+                    </div>
                 </li>
             </ul>
             <!--<button type="button" class="btn btn-primary" ng-click="go('/rooms/{{currentUser}}/newroom')" ng-click="newRoom()">Create a new room</button> -->

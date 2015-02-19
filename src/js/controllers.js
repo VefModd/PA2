@@ -27,7 +27,7 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
             var currRoom = {room: $scope.roomID, pass: undefined};
             var p_messages = [];
 
-            socket.emit('joinroom', currRoom, function(accepted) {
+            socket.emit('joinroom', currRoom, function(accepted, reason) {
                 if(accepted) {
                     socket.on('updatechat', function(room, messageHistory) {
                         $scope.messages = messageHistory;
@@ -45,7 +45,9 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                         $scope.roomops = Object.keys(opList);
                     });
                 } else {
-                    console.log("no");
+                    $location.path('/rooms/' + $routeParams.userID);
+                    alert("banned!!");
+                    console.log(reason);
                 }
             });
 
@@ -81,11 +83,25 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
             	console.log("mate: ", mate);
 
             	var kickObj = {user: mate, room: $scope.roomID};
-            	socket.emit('kick', kickObj);
+            	socket.emit('kick', kickObj, function(allowed) {
+                    // TODO! => maybe ask the user if he is sure he want to kick the mate??
+                    if(!allowed) {
+                        alert("You have to be OP to kick a mate!");
+                    }
+                });
             };
 
-            $scope.ban = function() {
-            	console.log("ban this bitch please");
+            $scope.ban = function(mate) {
+                $scope.userBanned = mate;
+            	console.log("mate: ", mate);
+
+                var banObj = {user: mate, room: $scope.roomID};
+                socket.emit('ban', banObj, function(allowed) {
+                    // TODO! => maybe ask the user if he is sure he want to ban the mate??
+                    if(!allowed) {
+                        alert("You have to be OP to ban a mate!")
+                    }
+                });
             };
 
         }]);
@@ -114,8 +130,10 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
 			} else if($scope.newRoomTopic === '') {
 				$scope.errorMsg = 'Please choose a topic for the room!';
 			} else {
-				var newRoom = {room: $scope.newRoomName, pass: $scope.newRoomPass};
+				var newRoom = {room: $scope.newRoomName, pass: $scope.newRoomPass, topic: $scope.newRoomTopic};
 				socket.emit('joinroom', newRoom);
+                //var topicObj = {room: $scope.newRoomName, topic: $scope.newRoomTopic};
+                //socket.emit('settopic', topicObj);
 				$location.path('/room/' + $scope.currentUser + '/' + $scope.newRoomName);
 			}
 		};
