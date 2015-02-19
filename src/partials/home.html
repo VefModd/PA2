@@ -1,13 +1,13 @@
 <div class="col-md-6 col-md-offset-3">
     <div class="panel panel-default">
-        <div class="panel-heading">Choose your nick:</div>
+        <div class="panel-heading">Choose your nick: {{ nickname }}</div>
         <div class="panel-body">
             <div class="alert alert-danger" ng-cloak ng-show="errorMsg != ''">
                 {{ errorMsg }}
             </div>
             <div class="form-group">
                 <label for="nickname" class="control-label">Nick-name</label>
-                <input type="text" class="form-control" id="nickname" name="nickname" ng-model="nickname" />
+                <input type="text" class="form-control" id="nickname" name="nickname" ng-keyup="$event.keyCode == 13 && login()" ng-model="nickname" />
             </div>
             <button type="button" class="btn btn-primary" ng-click="login()">Enter chat</button>
         </div>

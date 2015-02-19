@@ -33,12 +33,14 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                         $scope.messages = messageHistory;
                     });
                     socket.on('recv_privatemsg', function(sender, message) {
-                        var pm = {
+                        /*var pm = {
                             nick : sender,
                             timestamp : new Date(),
                             message : message.substring(0, 200)
                         };
                         p_messages.push(pm);
+                        $scope.messages + pm;*/
+                        console.log("recieved PM: ", message)
                     });
                     socket.on('updateusers', function(room, userList, opList) {
                         $scope.roommates = Object.keys(userList);
@@ -51,7 +53,7 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                 }
             });
 
-            $scope.inputMsg = '';
+            $scope.inputMsg = "";
 
             $scope.sendMsg = function() {
                 console.log("inside sendMSg");
@@ -67,6 +69,26 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                     });
                 }
                 $scope.inputMsg = '';
+            };
+
+            $scope.inputPrvtMsg = '';
+
+            $scope.set_recipient = function(recipient) {
+                $scope.msg_recipient = recipient;
+            };
+
+            $scope.prvt_msg = function() {
+                var msg = {
+                    nick : $scope.msg_recipient,
+                    message : $scope.inputPrvtMsg
+                };
+                socket.emit('privatemsg', msg, function(sent) {
+                    if(sent) {
+                        console.log("Success");
+                    } else {
+                        console.log("Failure");
+                    }
+                });
             };
 
             $scope.leave = function () {
