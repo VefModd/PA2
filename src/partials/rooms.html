@@ -4,13 +4,26 @@
         <div class="panel-heading">Active chat rooms:</div>
         <div class="panel-body">
             <ul class="list-group">
-                <li class="list-group-item" ng-repeat="room in rooms">
-                <span class="badge">{{ room.topic }}</span>
-                <a ng-href="#/room/{{currentUser}}/{{room}}">{{ room }}</a>
+                <li class="list-group-item" ng-repeat="room in rooms" ng-if="roomObj[room].banned[currentUser] === undefined">
+                    
+                    <div class="col-md-push">
+                        <a ng-href="#/room/{{currentUser}}/{{room}}">{{ room }}</a>
+                    </div>
+                    <div class="text-muted col-md-pull">
+                        &rarr; {{ roomObj[room].topic }}
+                    </div>
+                    
                 </li>
-                <li class="list-group-item">
-                <span class="badge">þetta er möödddarspjall</span>
-                <a ng-href="#/room/{{currentUser}}/{{room}}">whaaggt</a>
+                <li class="list-group-item" ng-repeat="room in rooms" ng-if="roomObj[room].banned[currentUser] !== undefined">
+                    <div class="text-danger text-uppercase pull-right">
+                        Banned
+                    </div>
+                    <div class="text-danger col-md-push">
+                        <strike>{{ room }}</strike>
+                    </div>
+                    <div class="text-muted col-md-pull">
+                        &rarr; {{ roomObj[room].topic }}
+                    </div>
                 </li>
             </ul>
             <!--<button type="button" class="btn btn-primary" ng-click="go('/rooms/{{currentUser}}/newroom')" ng-click="newRoom()">Create a new room</button> -->
