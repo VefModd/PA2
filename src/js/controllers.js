@@ -104,6 +104,19 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                 });
             };
 
+            $scope.promote = function(mate) {
+                $scope.userPromoted = mate;
+                console.log("mate: ", mate);
+
+                var opObj = {user: mate, room: $scope.roomID};
+                socket.emit('op', opObj, function(allowed) {
+                    // TODO! => maybe ask the user if he is sure he want to op the mate??
+                    if(!allowed) {
+                        alert("You have to be OP to promote a mate!");
+                    }
+                });
+            }
+
         }]);
 
 chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$location', 'socket',
