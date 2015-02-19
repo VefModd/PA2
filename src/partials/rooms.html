@@ -4,12 +4,11 @@
         <div class="panel-heading">Active chat rooms:</div>
         <div class="panel-body">
             <ul class="list-group">
-                <li class="list-group-item" ng-repeat="room in rooms">
-                    <!-- rooms[room].banned[currentUser] !== undefined -->
-                    <!--<div ng-show="rooms[room].banned[currentUser] === undefined">-->
+                <li class="list-group-item" ng-repeat="room in rooms" ng-if="roomObj[room].banned[currentUser] === undefined">
+                    <div>
                         <span class="badge pull-right">{{ roomObj[room].topic }}</span>
                         <a ng-href="#/room/{{currentUser}}/{{room}}">{{ room }}</a>
-                    <!--</div>-->
+                    </div>
                 </li>
             </ul>
             <!--<button type="button" class="btn btn-primary" ng-click="go('/rooms/{{currentUser}}/newroom')" ng-click="newRoom()">Create a new room</button> -->
