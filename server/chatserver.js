@@ -14,16 +14,6 @@ var users = {};
 //Default room.
 rooms.lobby = new Room();
 rooms.lobby.setTopic("Welcome to the lobby!");
-// this is for testing:
-/*
-   var messageObj = {
-   nick : "Nonni",
-   timestamp :  new Date(),
-   message : "rassgat"
-   };
-   rooms.lobby.addMessage(messageObj);
-   */
-// end of testing
 
 io.sockets.on('connection', function (socket) {
 

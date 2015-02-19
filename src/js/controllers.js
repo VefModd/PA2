@@ -149,7 +149,7 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
 			$scope.rooms = Object.keys(data);
             $scope.roomObj = data;
 		});
-		
+
 		$scope.newRoom = function() {
 			console.log("inside new room");
 			$location.path('/rooms/' + $scope.currentUser + '/newroom');
@@ -166,8 +166,9 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
 			} else if($scope.newRoomTopic === '') {
 				$scope.errorMsg = 'Please choose a topic for the room!';
 			} else {
+                socket.emit('rooms');
 				var joinObj = {room: $scope.newRoomName, pass: $scope.newRoomPass};
-				socket.emit('joinroom', joinObj);
+                socket.emit('joinroom', joinObj);
                 var topicObj = {room: $scope.newRoomName, topic: $scope.newRoomTopic};
                 socket.emit('settopic', topicObj);
 				$location.path('/room/' + $scope.currentUser + '/' + $scope.newRoomName);
