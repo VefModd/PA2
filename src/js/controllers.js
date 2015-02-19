@@ -112,6 +112,7 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
 		socket.emit('rooms');
 		socket.on('roomlist', function(data) {
 			$scope.rooms = Object.keys(data);
+            $scope.roomObj = data;
 		});
 		
 		$scope.newRoom = function() {

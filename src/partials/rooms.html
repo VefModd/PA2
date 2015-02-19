@@ -7,7 +7,7 @@
                 <li class="list-group-item" ng-repeat="room in rooms">
                     <!-- rooms[room].banned[currentUser] !== undefined -->
                     <!--<div ng-show="rooms[room].banned[currentUser] === undefined">-->
-                        <span class="badge pull-right">{{ room.topic }}heh</span>
+                        <span class="badge pull-right">{{ roomObj[room].topic }}</span>
                         <a ng-href="#/room/{{currentUser}}/{{room}}">{{ room }}</a>
                     <!--</div>-->
                 </li>
