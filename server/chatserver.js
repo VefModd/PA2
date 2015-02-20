@@ -295,7 +295,10 @@ io.sockets.on('connection', function (socket) {
         if(rooms[topicObj.room].ops[socket.username] !== undefined) {
             rooms[topicObj.room].setTopic(topicObj.topic);
             //Broadcast to room that the user changed the topic.
-            io.sockets.emit('updatetopic', topicObj.room, topicObj.topic, socket.username);
+            setTimeout(function() {
+                io.sockets.emit('updatetopic', topicObj.room, topicObj.topic, socket.username);
+            }, 150);
+            
             fn(true);
         }
         //Return false if topic was not set.

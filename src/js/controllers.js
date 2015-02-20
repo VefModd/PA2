@@ -23,8 +23,13 @@ chatControllers.controller('HomeController', ['$scope', '$http', '$location', '$
 chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket', '$location',
         function ($scope, $routeParams, socket, $location) {
             $scope.roomID = $routeParams.roomID;
-            //$scope.roomObj = rooms[$scope.roomID];
-            console.log("roomobj: ", $scope.roomObj);
+            $scope.roomTopic = 'bla';
+
+            socket.on('updatetopic', function(room, roomtopic, user) {
+                $scope.roomTopic = roomtopic;
+                console.log('roomtopic: ', roomtopic);
+                console.log("roomTopic: ", $scope.roomTopic);
+            });
 
             $scope.filt = $scope.query;
             //var currRoom = {room: $scope.roomID, pass: undefined};
