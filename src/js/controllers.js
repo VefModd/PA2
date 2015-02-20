@@ -24,35 +24,29 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
         function ($scope, $routeParams, socket, $location) {
             $scope.roomID = $routeParams.roomID;
             $scope.filt = $scope.query;
-            var currRoom = {room: $scope.roomID, pass: undefined};
+            //var currRoom = {room: $scope.roomID, pass: undefined};
             var p_messages = [];
 
-            socket.emit('joinroom', currRoom, function(accepted, reason) {
-                if(accepted) {
-                    socket.on('updatechat', function(room, messageHistory) {
-                        $scope.messages = messageHistory;
-                    });
-                    socket.on('recv_privatemsg', function(sender, message) {
-                        /*var pm = {
-                            nick : sender,
-                            timestamp : new Date(),
-                            message : message.substring(0, 200)
-                        };
-                        p_messages.push(pm);
-                        $scope.messages + pm;*/
-                        console.log("recieved PM: ", message)
-                    });
-                    socket.on('updateusers', function(room, userList, opList) {
-                        $scope.roommates = Object.keys(userList);
-                        $scope.roomops = Object.keys(opList);
-                    });
-                } else {
-                    $location.path('/rooms/' + $routeParams.userID);
-                    alert("banned!!");
-                    console.log(reason);
-                }
+            socket.on('updatechat', function(room, messageHistory) {
+                $scope.messages = messageHistory;
             });
-
+            socket.on('recv_privatemsg', function(sender, message) {
+                /*var pm = {
+                    nick : sender,
+                    timestamp : new Date(),
+                    message : message.substring(0, 200)
+                };
+                p_messages.push(pm);
+                $scope.messages + pm;*/
+                console.log("recieved PM: ", message)
+            });
+            socket.on('updateusers', function(room, userList, opList) {
+                console.log("usrs: ", userList);
+                console.log("ops: ", opList);
+                $scope.roommates = Object.keys(userList);
+                $scope.roomops = Object.keys(opList);
+            });
+            
             $scope.inputMsg = "";
 
             $scope.sendMsg = function() {
@@ -166,12 +160,22 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
 			} else if($scope.newRoomTopic === '') {
 				$scope.errorMsg = 'Please choose a topic for the room!';
 			} else {
-				var joinObj = {room: $scope.newRoomName, pass: $scope.newRoomPass};
+				$location.path('/room/' + $scope.currentUser + '/' + $scope.newRoomName);
+                var joinObj = {room: $scope.newRoomName, pass: $scope.newRoomPass};
                 socket.emit('joinroom', joinObj);
                 var topicObj = {room: $scope.newRoomName, topic: $scope.newRoomTopic};
                 socket.emit('settopic', topicObj);
-				$location.path('/room/' + $scope.currentUser + '/' + $scope.newRoomName);
 			}
 		};
-		
+
+        $scope.joinRoom = function(roomID) {
+            var joinObj = {room: roomID, pass: ''};
+            socket.emit('joinroom', joinObj, function(accepted, reason) {
+                if(accepted) {
+                    $location.path('/room/' + $scope.currentUser + '/' + roomID);
+                } else {
+                    // TODO ERROR MESSAGE
+                }
+            });
+        };
 	}]);

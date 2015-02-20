@@ -36,13 +36,19 @@ io.sockets.on('connection', function (socket) {
     //When a user joins a room this processes the request.
     socket.on('joinroom', function (joinObj, fn) {
 
+        console.log("Inside joinroom!");
+
         var room = joinObj.room;
         var pass = joinObj.pass;
         var accepted = true;
         var reason;
 
+        console.log("room:",  room);
+        console.log("joinObj.room:", joinObj.room);
+
         //If the room does not exist
         if(rooms[room] === undefined) {
+            console.log("Inside if in joinroom!");
             rooms[room] = new Room();
             //Op the user if he creates the room.
             rooms[room].ops[socket.username] = socket.username;
@@ -54,12 +60,24 @@ io.sockets.on('connection', function (socket) {
             users[socket.username].channels[room] = room;
             //Send the room information to the client.
             fn(true);
+
+            console.log("Alot of emits right now:!");
+
             io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
             //Update topic
             socket.emit('updatetopic', room, rooms[room].topic, socket.username);
             io.sockets.emit('servermessage', "join", room, socket.username);
+
+            //Remove the user from the room roster.
+            console.log("Deleteing user from the users group!");
+            console.log("The guys trying to delete: ", socket.username);
+            console.log("The room: ", rooms[room]);
+            console.log("the room room: ", room);
+            console.log("This users: ", rooms[room].users);
         }
         else {
+
+            console.log("Inside else in joinroom!");
 
             //If the room isn't locked we set accepted to true.
             if(rooms[room].locked === false) {
@@ -311,9 +329,11 @@ function Room() {
         this.locked = false,
         this.password = "",
 
-        this.addUser = function(user) {
-            (user !== undefined) ? this.users[user] = user : console.log("ERROR: add user");
-        };
+    this.addUser = function(user) {
+        console.log("Adding a user!!");
+        (user !== undefined) ? this.users[user] = user : console.log("ERROR: add user");
+    };
+
     this.banUser = function(user) {
         (user !== undefined) ? this.banned[user] = user : console.log("ERROR: ban user 1");
         (this.users[user] == user) ? delete this.users[user] : console.log("ERROR: ban user 2");
