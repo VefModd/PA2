@@ -43,13 +43,21 @@
                 </ul>
                 <ul class="list-group">
                     <li class="list-group-item" ng-repeat="mate in roommates | filter:query">
-                    {{ mate }}
-                    <div class="pull-right">
-                        <button type="button" data-toggle="modal" data-target=".pm_modal" class="btn btn-info btn-xs" ng-click="set_recipient(mate)"><i class="glyphicon glyphicon-envelope"></i></button>
-                        <button type="button" class="btn btn-success btn-xs" ng-click="promote(mate)">Promote</button>
-                        <button type="button" class="btn btn-warning btn-xs" ng-click="kick(mate)">Kick</button>
-                        <button type="button" class="btn btn-danger btn-xs" ng-click="ban(mate)">Ban</button>
-                    </div>
+                        {{ mate }}
+                        <div class="pull-right">
+                            <button type="button" data-toggle="modal" data-target=".pm_modal" class="btn btn-info btn-xs" ng-click="set_recipient(mate)">
+                                <i class="glyphicon glyphicon-envelope"></i>
+                            </button>
+                            <button type="button" class="btn btn-success btn-xs" ng-click="promote(mate)" ng-show="opObj[currentUser] !== undefined">
+                                Promote
+                            </button>
+                            <button type="button" class="btn btn-warning btn-xs" ng-click="kick(mate)" ng-show="opObj[currentUser] !== undefined">
+                                Kick
+                            </button>
+                            <button type="button" class="btn btn-danger btn-xs" ng-click="ban(mate)" ng-show="opObj[currentUser] !== undefined">
+                                Ban
+                            </button>
+                        </div>
                     </li>
                 </ul>
                 <button type="button" class="btn btn-primary" ng-click="leave()">Leave room</button>
