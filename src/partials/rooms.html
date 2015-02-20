@@ -7,7 +7,7 @@
                 <li class="list-group-item" ng-repeat="room in rooms" ng-if="roomObj[room].banned[currentUser] === undefined">
                     
                     <div class="col-md-push">
-                        <button type="button" ng-click="joinRoom(room)">{{ room }}</button>
+                        <a ng-click="joinRoom(room)">{{ room }}</a>
                     </div>
                     <div class="text-muted col-md-pull">
                         &rarr; {{ roomObj[room].topic }}
