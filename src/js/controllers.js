@@ -168,11 +168,11 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
 			} else if($scope.newRoomTopic === '') {
 				$scope.errorMsg = 'Please choose a topic for the room!';
 			} else {
-				$location.path('/room/' + $scope.currentUser + '/' + $scope.newRoomName);
                 var joinObj = {room: $scope.newRoomName, pass: $scope.newRoomPass};
                 socket.emit('joinroom', joinObj);
                 var topicObj = {room: $scope.newRoomName, topic: $scope.newRoomTopic};
                 socket.emit('settopic', topicObj);
+				$location.path('/room/' + $scope.currentUser + '/' + $scope.newRoomName);
 			}
 		};
 
