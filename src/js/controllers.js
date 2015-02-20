@@ -23,6 +23,9 @@ chatControllers.controller('HomeController', ['$scope', '$http', '$location', '$
 chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket', '$location',
         function ($scope, $routeParams, socket, $location) {
             $scope.roomID = $routeParams.roomID;
+            //$scope.roomObj = rooms[$scope.roomID];
+            console.log("roomobj: ", $scope.roomObj);
+
             $scope.filt = $scope.query;
             //var currRoom = {room: $scope.roomID, pass: undefined};
             var p_messages = [];
