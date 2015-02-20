@@ -180,8 +180,10 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
                     // No room parameter, so we create new room
                     if($scope.newRoomName === '') {
                         $scope.errorMsg = 'Please choose a name for the room!';
+                        return;
                     } else if($scope.newRoomTopic === '') {
                         $scope.errorMsg = 'Please choose a topic for the room!';
+                        return;
                     } else {
                         joinObj = {room: $scope.newRoomName, pass: $scope.newRoomPass, topic: $scope.newRoomTopic};
                     }
