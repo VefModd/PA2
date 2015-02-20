@@ -66,6 +66,11 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                 console.log("room!!: ", room);
             });
 
+            socket.on('updatebanlist', function(banlist) {
+                $scope.banlist = banlist;
+                console.log("banlist: ", banlist);
+            });
+
             $scope.inputMsg = "";
 
             $scope.sendMsg = function() {
