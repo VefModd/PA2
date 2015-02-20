@@ -65,6 +65,18 @@
                         </div>
                     </li>
                 </ul>
+                <!--
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="mate in roommates | filter:query">
+                        {{ mate }}
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-danger btn-xs" ng-click="ban(mate)" ng-show="opObj[currentUser] !== undefined">
+                                Unban
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+                -->
                 <button type="button" class="btn btn-primary" ng-click="leave()">Leave room</button>
             </div>
         </div>

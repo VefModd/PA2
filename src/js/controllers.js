@@ -29,6 +29,12 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                 $scope.roomTopic = roomtopic;
             });
 
+            socket.emit('rooms');
+            socket.on('roomlist', function(data) {
+                $scope.roomObj = data;
+                console.log("roomObj: ", $scope.roomObj);
+            });
+
             /*
             socket.on('updateusers', function(room, users, ops) {
                 $scope.ops = ops;
@@ -62,6 +68,7 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                 $scope.roomops = Object.keys(opList);
                 $scope.opObj = opList;
                 console.log("opObj: ", $scope.opObj);
+                console.log("room!!: ", room);
             });
 
             $scope.inputMsg = "";
