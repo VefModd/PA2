@@ -40,7 +40,7 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                         };
                         p_messages.push(pm);
                         $scope.messages + pm;*/
-                        console.log("recieved PM: ", message)
+                        console.log("recieved PM: ", message);
                     });
                     socket.on('updateusers', function(room, userList, opList) {
                         $scope.roommates = Object.keys(userList);
@@ -68,27 +68,30 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                         console.log("messageHistory: ", messageHistory);
                     });
                 }
-                $scope.inputMsg = '';
+                $scope.inputMsg = "";
             };
 
-            $scope.inputPrvtMsg = '';
+            $scope.inputPrvtMsg = "";
 
             $scope.set_recipient = function(recipient) {
                 $scope.msg_recipient = recipient;
             };
 
             $scope.prvt_msg = function() {
-                var msg = {
-                    nick : $scope.msg_recipient,
-                    message : $scope.inputPrvtMsg
-                };
-                socket.emit('privatemsg', msg, function(sent) {
-                    if(sent) {
-                        console.log("Success");
-                    } else {
-                        console.log("Failure");
-                    }
-                });
+                if($scope.inputPrvtMsg !== "") {
+                    var msg = {
+                        nick : $scope.msg_recipient,
+                        message : $scope.inputPrvtMsg
+                    };
+                    socket.emit('privatemsg', msg, function(sent) {
+                        if(sent) {
+                            $scope.inputPrvtMsg = "";
+                            console.log("PM: Success");
+                        } else {
+                            console.log("PM: Failure");
+                        }
+                    });
+                }
             };
 
             $scope.leave = function () {
@@ -121,7 +124,7 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                 socket.emit('ban', banObj, function(allowed) {
                     // TODO! => maybe ask the user if he is sure he want to ban the mate??
                     if(!allowed) {
-                        alert("You have to be OP to ban a mate!")
+                        alert("You have to be OP to ban a mate!");
                     }
                 });
             };
@@ -137,7 +140,7 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                         alert("You have to be OP to promote a mate!");
                     }
                 });
-            }
+            };
 
         }]);
 

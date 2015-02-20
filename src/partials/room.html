@@ -30,7 +30,11 @@
             <div class="panel-body">
                 <input class="form-control" ng-model="query" placeholder="Search mates...">
                 <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="mate in roommates | filter:query"><span class="glyphicon glyphicon-pawn"></span> {{ mate }}
+                    <li class="list-group-item" ng-repeat="op in roomops | filter:query"><span class="label label-warning  pull-left"><span class="glyphicon glyphicon-star"></span></span>  {{ op }}</li>
+                </ul>
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="mate in roommates | filter:query">
+                    {{ mate }}
                     <div class="pull-right">
                         <button type="button" data-toggle="modal" data-target=".pm_modal" class="btn btn-info btn-xs" ng-click="set_recipient(mate)"><span class="glyphicon glyphicon-envelope"></span></button>
                         <button type="button" class="btn btn-success btn-xs" ng-click="promote(mate)">Promote</button>
@@ -57,7 +61,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" ng-click="prvt_msg(msg_recipient)" class="btn btn-primary">Send</button>
+                    <button type="button" data-toggle="modal" data-target=".pm_modal"  ng-click="prvt_msg(msg_recipient)" class="btn btn-primary">Send</button>
                 </div>
             </div>
         </div>
