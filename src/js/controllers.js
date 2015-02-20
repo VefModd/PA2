@@ -156,46 +156,46 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
         }]);
 
 chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$location', 'socket',
-	function ($scope, $routeParams, $location, socket) {
-		$scope.currentUser = $routeParams.userID;
-		socket.emit('rooms');
-		socket.on('roomlist', function(data) {
-			$scope.rooms = Object.keys(data);
-            $scope.roomObj = data;
-		});
-
-		$scope.newRoom = function() {
-			console.log("inside new room");
-			$location.path('/rooms/' + $scope.currentUser + '/newroom');
-		};
-
-		$scope.newRoomName = '';
-		$scope.newRoomTopic = '';
-		$scope.newRoomPass = undefined;
-		$scope.errorMsg = '';
-
-		$scope.createNewRoom = function() {
-			if($scope.newRoomName === '') {
-				$scope.errorMsg = 'Please choose a name for the room!';
-			} else if($scope.newRoomTopic === '') {
-				$scope.errorMsg = 'Please choose a topic for the room!';
-			} else {
-                var joinObj = {room: $scope.newRoomName, pass: $scope.newRoomPass};
-                socket.emit('joinroom', joinObj);
-                var topicObj = {room: $scope.newRoomName, topic: $scope.newRoomTopic};
-                socket.emit('settopic', topicObj);
-				$location.path('/room/' + $scope.currentUser + '/' + $scope.newRoomName);
-			}
-		};
-
-        $scope.joinRoom = function(roomID) {
-            var joinObj = {room: roomID, pass: ''};
-            socket.emit('joinroom', joinObj, function(accepted, reason) {
-                if(accepted) {
-                    $location.path('/room/' + $scope.currentUser + '/' + roomID);
-                } else {
-                    // TODO ERROR MESSAGE
-                }
+        function ($scope, $routeParams, $location, socket) {
+            $scope.currentUser = $routeParams.userID;
+            socket.emit('rooms');
+            socket.on('roomlist', function(data) {
+                $scope.rooms = Object.keys(data);
+                $scope.roomObj = data;
             });
-        };
-	}]);
+
+            $scope.newRoom = function() {
+                $location.path('/rooms/' + $scope.currentUser + '/newroom');
+            };
+
+            $scope.newRoomName = '';
+            $scope.newRoomTopic = '';
+            $scope.newRoomPass = undefined;
+            $scope.errorMsg = '';
+
+
+            $scope.joinRoom = function(roomID) {
+                var joinObj;
+                if(roomID === undefined) {
+                    // No room parameter, so we create new room
+                    if($scope.newRoomName === '') {
+                        $scope.errorMsg = 'Please choose a name for the room!';
+                    } else if($scope.newRoomTopic === '') {
+                        $scope.errorMsg = 'Please choose a topic for the room!';
+                    } else {
+                        joinObj = {room: $scope.newRoomName, pass: $scope.newRoomPass, topic: $scope.newRoomTopic};
+                    }
+                } else {
+                    // With roomID we join
+                    joinObj = {room: roomID, pass: ''};
+                }
+                socket.emit('joinroom', joinObj, function(accepted, reason) {
+                    if(accepted) {
+                        $location.path('/room/' + $scope.currentUser + '/' + joinObj.room);
+                    } else {
+                        // TODO ERROR MESSAGE
+                    }
+                });
+
+            };
+        }]);
