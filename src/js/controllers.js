@@ -58,9 +58,11 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
             socket.on('updateusers', function(room, userList, opList) {
                 console.log("usrs: ", userList);
                 console.log("ops: ", opList);
-                $scope.roommates = Object.keys(userList);
-                $scope.roomops = Object.keys(opList);
-                $scope.opObj = opList;
+                if($scope.roomID === room) {
+                    $scope.roommates = Object.keys(userList);
+                    $scope.roomops = Object.keys(opList);
+                    $scope.opObj = opList;
+                }
                 
                 console.log("opObj: ", $scope.opObj);
                 console.log("room!!: ", room);
