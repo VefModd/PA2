@@ -106,10 +106,14 @@ io.sockets.on('connection', function (socket) {
                 //Keep track of the room in the user object.
                 users[socket.username].channels[room] = room;
                 //Send the room information to the client.
-                io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
-                socket.emit('updatechat', room, rooms[room].messageHistory);
-                socket.emit('updatetopic', room, rooms[room].topic, socket.username);
-                io.sockets.emit('servermessage', "join", room, socket.username);
+                console.log("now we are emitting");
+                setTimeout(function() {
+                    io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
+                    socket.emit('updatechat', room, rooms[room].messageHistory);
+                    socket.emit('updatetopic', room, rooms[room].topic, socket.username);
+                    io.sockets.emit('servermessage', "join", room, socket.username);    
+                }, 150);
+                
             }
             fn(false, reason);
         }

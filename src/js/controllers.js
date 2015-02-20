@@ -30,6 +30,8 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
             socket.on('updatechat', function(room, messageHistory) {
                 $scope.messages = messageHistory;
             });
+
+
             socket.on('recv_privatemsg', function(sender, message) {
                 /*var pm = {
                     nick : sender,
@@ -40,6 +42,7 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                 $scope.messages + pm;*/
                 console.log("recieved PM: ", message)
             });
+
             socket.on('updateusers', function(room, userList, opList) {
                 console.log("usrs: ", userList);
                 console.log("ops: ", opList);
