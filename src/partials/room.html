@@ -39,7 +39,12 @@
             <div class="panel-body">
                 <input class="form-control" ng-model="query" placeholder="Search mates...">
                 <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="op in roomops | filter:query"><i class="glyphicon glyphicon-king"></i>  {{ op }}</li>
+                    <li class="list-group-item" ng-repeat="op in roomops | filter:query">
+                        <i class="glyphicon glyphicon-king"></i>{{ op }}
+                         <button type="button" data-toggle="modal" data-target=".pm_modal" class="btn btn-info btn-xs" ng-click="set_recipient(op)">
+                            <i class="glyphicon glyphicon-envelope"></i>
+                        </button>
+                    </li>
                 </ul>
                 <ul class="list-group">
                     <li class="list-group-item" ng-repeat="mate in roommates | filter:query">
