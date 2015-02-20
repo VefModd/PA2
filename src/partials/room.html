@@ -72,6 +72,18 @@
                         </div>
                     </li>
                 </ul>
+                
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="banmate in banlist | filter:query" ng-show="opObj[currentUser] !== undefined">
+                        {{ banmate }}
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-danger btn-xs" ng-click="unban(banmate)">
+                                Unban
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+                
                 <button type="button" class="btn btn-primary" ng-click="leave()">Leave room</button>
             </div>
         </div>

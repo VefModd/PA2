@@ -47,10 +47,19 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
             socket.on('updateusers', function(room, userList, opList) {
                 console.log("usrs: ", userList);
                 console.log("ops: ", opList);
-                $scope.roommates = Object.keys(userList);
-                $scope.roomops = Object.keys(opList);
-                $scope.opObj = opList;
+                if($scope.roomID === room) {
+                    $scope.roommates = Object.keys(userList);
+                    $scope.roomops = Object.keys(opList);
+                    $scope.opObj = opList;
+                }
+                
                 console.log("opObj: ", $scope.opObj);
+                console.log("room!!: ", room);
+            });
+
+            socket.on('updatebanlist', function(banlist) {
+                $scope.banlist = banlist;
+                console.log("banlist: ", banlist);
             });
 
             $scope.inputMsg = "";
@@ -115,12 +124,20 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
             $scope.ban = function(mate) {
                 $scope.userBanned = mate;
                 console.log("mate: ", mate);
-
                 var banObj = {user: mate, room: $scope.roomID};
                 socket.emit('ban', banObj, function(allowed) {
                     // TODO! => maybe ask the user if he is sure he want to ban the mate??
                     if(!allowed) {
                         alert("You have to be OP to ban a mate!");
+                    }
+                });
+            };
+
+            $scope.unban = function(banmate) {
+                var unbanObj = {user: banmate, room: $scope.roomID};
+                socket.emit('unban', unbanObj, function(allowed) {
+                    if(!allowed) {
+                        // TODO
                     }
                 });
             };
@@ -178,6 +195,7 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
                 }
                 socket.emit('joinroom', joinObj, function(accepted, reason) {
                     if(accepted) {
+                        socket.emit('rooms');
                         $location.path('/room/' + $scope.currentUser + '/' + joinObj.room);
                     } else {
                         // TODO ERROR MESSAGE
