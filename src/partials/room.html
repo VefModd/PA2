@@ -15,9 +15,16 @@
             <div class="panel-heading">Chat:</div>
             <div class="panel-body">
                 <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="message in messages">
-                    <span class="badge">{{ message.nick }}</span>
-                    {{ message.message }}
+                    <li ng-repeat="message in messages | orderBy:'timestamp'" class="list-group-item" ng-class="{'list-group-item-info':message.prvt}">
+                    <div class="row">
+                        <div class="col-md-11">
+                            <p><strong>{{ message.nick }}<small ng-show="message.prvt === true">(private)</small>:</strong>
+                            {{ message.message }}</p>
+                        </div>
+                        <div class="col-md-1">
+                        <span class="pull-right">{{ message.timestamp | date : 'HH:mm:ss'}} </span>
+                        </div>
+                    </div>
                     </li>
                 </ul>
                 <div class="form-group col-md-12">

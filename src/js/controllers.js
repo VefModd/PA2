@@ -29,29 +29,18 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                 $scope.roomTopic = roomtopic;
             });
 
-            /*
-            socket.on('updateusers', function(room, users, ops) {
-                $scope.ops = ops;
-                console.log("ops: ", $scope.ops);
-            });
-            */
-
             $scope.filt = $scope.query;
-            //var currRoom = {room: $scope.roomID, pass: undefined};
             var p_messages = [];
 
             socket.on('updatechat', function(room, messageHistory) {
-                $scope.messages = messageHistory;
+                $scope.messages = p_messages.concat(messageHistory);
+                console.log("messages: ", $scope.messages);
             });
 
-            socket.on('recv_privatemsg', function(sender, message) {
-                /*var pm = {
-                  nick : sender,
-                  timestamp : new Date(),
-                  message : message.substring(0, 200)
-                  };
-                  p_messages.push(pm);
-                  $scope.messages + pm;*/
+            socket.on('recv_privatemsg', function(message) {
+                p_messages.push(message);
+                $scope.messages = $scope.messages.concat(message);
+                console.log("PM: ", p_messages);
                 console.log("recieved PM: ", message);
             });
 
@@ -74,10 +63,6 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                     console.log($scope.roomID);
                     var input = {roomName: $scope.roomID, msg: $scope.inputMsg};
                     socket.emit('sendmsg', input);
-                    socket.on('updatechat', function(room, messageHistory) {
-                        $scope.messages = messageHistory;
-                        console.log("messageHistory: ", messageHistory);
-                    });
                 }
                 $scope.inputMsg = "";
             };
@@ -115,11 +100,11 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
             });
 
             $scope.kick = function(mate) {
-            	$scope.userKicked = mate;
-            	console.log("mate: ", mate);
+                $scope.userKicked = mate;
+                console.log("mate: ", mate);
 
-            	var kickObj = {user: mate, room: $scope.roomID};
-            	socket.emit('kick', kickObj, function(allowed) {
+                var kickObj = {user: mate, room: $scope.roomID};
+                socket.emit('kick', kickObj, function(allowed) {
                     // TODO! => maybe ask the user if he is sure he want to kick the mate??
                     if(!allowed) {
                         alert("You have to be OP to kick a mate!");
@@ -129,7 +114,7 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
 
             $scope.ban = function(mate) {
                 $scope.userBanned = mate;
-            	console.log("mate: ", mate);
+                console.log("mate: ", mate);
 
                 var banObj = {user: mate, room: $scope.roomID};
                 socket.emit('ban', banObj, function(allowed) {

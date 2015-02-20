@@ -67,6 +67,7 @@ io.sockets.on('connection', function (socket) {
             //Send the room information to the client.
             setTimeout(function() {
                 io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
+                    socket.emit('updatechat', room, rooms[room].messageHistory);
                 socket.emit('updatetopic', room, rooms[room].topic, socket.username);
                 io.sockets.emit('servermessage', "join", room, socket.username);
             }, 150);
@@ -132,8 +133,9 @@ io.sockets.on('connection', function (socket) {
             //Update the message history for the room that the user sent the message to.
             var messageObj = {
                 nick : socket.username,
-        timestamp :  new Date(),
-        message : data.msg.substring(0, 200)
+                timestamp :  new Date(),
+                message : data.msg.substring(0, 200),
+                prvt : false
             };
             rooms[data.roomName].addMessage(messageObj);
             io.sockets.emit('updatechat', data.roomName, rooms[data.roomName].messageHistory);
@@ -145,7 +147,13 @@ io.sockets.on('connection', function (socket) {
         //If user exists in global user list.
         if(users[msgObj.nick] !== undefined) {
             //Send the message only to this user.
-            users[msgObj.nick].socket.emit('recv_privatemsg', socket.username, msgObj.message);
+            var msgObjSend = {
+                nick : socket.username,
+                timestamp : new Date(),
+                message : msgObj.message.substring(200, 0),
+                prvt : true
+            };
+            users[msgObj.nick].socket.emit('recv_privatemsg', msgObjSend);
             //Callback recieves true.
             fn(true);
         }
