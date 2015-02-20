@@ -273,7 +273,8 @@ io.sockets.on('connection', function (socket) {
 
     //Returns a list of all avaliable rooms.
     socket.on('rooms', function() {
-        socket.emit('roomlist', rooms);
+        console.log("emitting rooms!!!");
+        io.sockets.emit('roomlist', rooms);
     });
 
     //Returns a list of all connected users.

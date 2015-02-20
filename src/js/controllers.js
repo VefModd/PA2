@@ -206,6 +206,7 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
                 }
                 socket.emit('joinroom', joinObj, function(accepted, reason) {
                     if(accepted) {
+                        socket.emit('rooms');
                         $location.path('/room/' + $scope.currentUser + '/' + joinObj.room);
                     } else {
                         // TODO ERROR MESSAGE
