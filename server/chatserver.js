@@ -265,6 +265,7 @@ io.sockets.on('connection', function (socket) {
             //Remove the user from the room ban list.
             delete rooms[unbanObj.room].banned[unbanObj.user];
             io.sockets.emit('updatebanlist', rooms[unbanObj.room].banned);
+            io.sockets.emit('updateusers', unbanObj.room, rooms[unbanObj.room].users, rooms[unbanObj.room].ops);
             fn(true);
         }
         fn(false);
