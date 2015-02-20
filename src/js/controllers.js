@@ -135,14 +135,20 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
             };
 
             $scope.ban = function(mate) {
-                $scope.userBanned = mate;
-            	console.log("mate: ", mate);
-
                 var banObj = {user: mate, room: $scope.roomID};
                 socket.emit('ban', banObj, function(allowed) {
                     // TODO! => maybe ask the user if he is sure he want to ban the mate??
                     if(!allowed) {
                         alert("You have to be OP to ban a mate!");
+                    }
+                });
+            };
+
+            $scope.unban = function(banmate) {
+                var unbanObj = {user: banmate, room: $scope.roomID};
+                socket.emit('unban', unbanObj, function(allowed) {
+                    if(!allowed) {
+                        // TODO
                     }
                 });
             };
