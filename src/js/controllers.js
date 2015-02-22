@@ -137,11 +137,9 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                 }
             });
 
-            socket.on('unbanned', function(room, unbannedUser, username) {
-                if(unbannedUser === $scope.currentUser) {
-                    console.log("YEES");
-                    //$location.path('/rooms/' + unbannedUser);
-                    $route.reload();
+            socket.on('kicked', function(room, kickedUser, username) {
+                if(kickedUser == $scope.currentUser) {
+                    $location.path('/rooms/' + kickedUser);
                 }
             });
 
@@ -168,9 +166,10 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
 
         }]);
 
-chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$location', 'socket',
-        function ($scope, $routeParams, $location, socket) {
+chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$location', 'socket', '$route',
+        function ($scope, $routeParams, $location, socket, $route) {
             $scope.currentUser = $routeParams.userID;
+
             socket.emit('rooms');
             socket.on('roomlist', function(data) {
                 $scope.rooms = Object.keys(data);
@@ -214,4 +213,11 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
                 });
 
             };
+
+            socket.on('unbanned', function(room, unbannedUser, username) {
+                if(unbannedUser === $scope.currentUser) {
+                    $route.reload();
+                }
+            });
+
         }]);
