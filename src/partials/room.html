@@ -49,9 +49,8 @@
                     <li class="list-group-item" ng-repeat="op in roomops | filter:query">
                     <i class="glyphicon glyphicon-king"></i>{{ op }}
                     <div class="pull-right">
-                        <button type="button" data-toggle="modal" data-target=".pm_modal" class="btn btn-xs" ng-class="{true:'btn-warning', false:'btn-info'}[newMessage == true&& msg_recipient == op]" ng-click="set_recipient(op)"></button>
+                        <button type="button" data-toggle="modal" data-target=".pm_modal" class="btn btn-xs" ng-class="{true:'btn-warning', false:'btn-info'}[newMessage == true&& msg_recipient == op]" ng-click="set_recipient(op)"><i class="glyphicon glyphicon-envelope"></i></button>
                     </div>
-                    <i class="glyphicon glyphicon-envelope"></i>
                     </button>
                     </li>
                 </ul>

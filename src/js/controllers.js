@@ -59,7 +59,6 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
 
             socket.on('recv_privatemsg', function(messageHistoryPrivate) {
                 if(messageHistoryPrivate[messageHistoryPrivate.length -1].recipient === $scope.currentUser) {
-                    console.log("NEW MESSAGE FOR YOU!");
                     $scope.newMessage = true;
                     $scope.msg_recipient = messageHistoryPrivate[messageHistoryPrivate.length -1].nick;
                 }
