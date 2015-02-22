@@ -1,6 +1,7 @@
 var angularChat = angular.module('angularChat', [
   'chatControllers',
-  'ngRoute'
+  'ngRoute',
+  'myFilters'
 ]);
 
 angularChat.config(['$routeProvider',
