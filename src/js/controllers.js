@@ -128,7 +128,7 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                 socket.emit('ban', banObj, function(allowed) {
                     // TODO! => maybe ask the user if he is sure he want to ban the mate??
                     if(!allowed) {
-                        alert("You have to be OP to ban a mate!");
+                        
                     }
                 });
             };
