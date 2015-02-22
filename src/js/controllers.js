@@ -241,7 +241,6 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
                 }
             });
 
-
             socket.on('banneduser', function(room, bannedUser, username) {
                 if(bannedUser === $scope.currentUser) {
                     $scope.bannedMessage = 'You just got banned from ' + room + ' by ' + username + '.';
@@ -250,7 +249,7 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
 
             socket.on('kickeduser', function(room, kickeduser, username) {
                 if(kickeduser === $scope.currentUser) {
-                    $scope.bannedMessage = 'You just got kicked from ' + room + ' by ' + username + '.';
+                    $scope.kickedMessage = 'You just got kicked from ' + room + ' by ' + username + '.';
                 }
             });
 
