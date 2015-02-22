@@ -204,7 +204,6 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
             $scope.newRoomPass = undefined;
             $scope.errorMsg = '';
 
-
             $scope.joinRoom = function(roomID) {
                 var joinObj;
                 if(roomID === undefined) {
@@ -233,11 +232,27 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
 
             };
 
+            $scope.bannedMessage = '';
+            $scope.kickedMessage = '';
+
             socket.on('unbanned', function(room, unbannedUser, username) {
                 if(unbannedUser === $scope.currentUser) {
                     $route.reload();
                 }
             });
+
+            socket.on('banneduser', function(room, bannedUser, username) {
+                if(bannedUser === $scope.currentUser) {
+                    $scope.bannedMessage = 'You just got banned from ' + room + ' by ' + username + '.';
+                }
+            });
+
+            socket.on('kickeduser', function(room, kickeduser, username) {
+                if(kickeduser === $scope.currentUser) {
+                    $scope.kickedMessage = 'You just got kicked from ' + room + ' by ' + username + '.';
+                }
+            });
+
 
         }]);
 

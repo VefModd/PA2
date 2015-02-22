@@ -26,9 +26,14 @@
                 </div>
                 </li>
             </ul>
-            <!--<div class="alert alert-danger" ng-cloak ng-if="bannedMessage !== 'undefined'">
-                {{ bannedMessage }}LOL
-            </div>-->
+            <div class="alert alert-dismissible alert-danger" ng-cloak ng-if="bannedMessage !== ''">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <p>{{ bannedMessage }}</p>
+            </div>
+            <div class="alert alert-dismissible alert-warning" ng-cloak ng-if="kickedMessage !== ''">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <p>{{ kickedMessage }}</p>
+            </div>
             <!--<button type="button" class="btn btn-primary" ng-click="go('/rooms/{{currentUser}}/newroom')" ng-click="newRoom()">Create a new room</button> -->
             <button type="button" class="btn btn-primary" ng-click="newRoom()">Create a new room</button>
         </div>
