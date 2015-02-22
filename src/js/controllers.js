@@ -234,10 +234,18 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
 
             $scope.bannedMessage = '';
             $scope.kickedMessage = '';
+            $scope.unbanMessage = '';
+            console.log("yes", $scope.unbanMessage);
 
             socket.on('unbanned', function(room, unbannedUser, username) {
                 if(unbannedUser === $scope.currentUser) {
                     $route.reload();
+                }
+            });
+
+            socket.on('unbanneduser', function(room, unbannedUser, username) {
+                if(unbannedUser === $scope.currentUser) {
+                    $scope.unbanMessage = 'You just got unbanned from ' + room + ' by ' + username + '.';
                 }
             });
 
