@@ -266,9 +266,9 @@ io.sockets.on('connection', function (socket) {
             //Add the user to the ban list and remove him from the room user roster.
             rooms[banObj.room].banUser(banObj.user);
             //Kick the user from the room.
-            io.sockets.emit('banned', banObj.room, banObj.user, socket.username);
             io.sockets.emit('updatebanlist', rooms[banObj.room].banned);
             io.sockets.emit('updateusers', banObj.room, rooms[banObj.room].users, rooms[banObj.room].ops);
+            io.sockets.emit('banned', banObj.room, banObj.user, socket.username);
             fn(true);
         }
         fn(false);
@@ -281,6 +281,7 @@ io.sockets.on('connection', function (socket) {
             delete rooms[unbanObj.room].banned[unbanObj.user];
             io.sockets.emit('updatebanlist', rooms[unbanObj.room].banned);
             io.sockets.emit('updateusers', unbanObj.room, rooms[unbanObj.room].users, rooms[unbanObj.room].ops);
+            io.sockets.emit('unbanned', unbanObj.room, unbanObj.user, socket.username);
             fn(true);
         }
         fn(false);

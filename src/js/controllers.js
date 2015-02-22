@@ -38,8 +38,8 @@ chatControllers.controller('HomeController', ['$scope', '$http', '$location', '$
             };
         }]);
 
-chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket', '$location',
-        function ($scope, $routeParams, socket, $location) {
+chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket', '$location', '$route',
+        function ($scope, $routeParams, socket, $location, $route) {
             $scope.roomID = $routeParams.roomID;
             $scope.currentUser = $routeParams.userID;
 
@@ -135,7 +135,6 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                 socket.emit('kick', kickObj, function(allowed) {
                     // TODO! => maybe ask the user if he is sure he want to kick the mate??
                     if(!allowed) {
-                        alert("You have to be OP to kick a mate!");
                     }
                 });
             };
@@ -147,10 +146,21 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                 socket.emit('ban', banObj, function(allowed) {
                     // TODO! => maybe ask the user if he is sure he want to ban the mate??
                     if(!allowed) {
-                        alert("You have to be OP to ban a mate!");
                     }
                 });
             };
+
+            socket.on('banned', function(room, bannedUser, username) {
+                if(bannedUser === $scope.currentUser) {
+                    $location.path('/rooms/' + bannedUser);
+                }
+            });
+
+            socket.on('kicked', function(room, kickedUser, username) {
+                if(kickedUser == $scope.currentUser) {
+                    $location.path('/rooms/' + kickedUser);
+                }
+            });
 
             $scope.unban = function(banmate) {
                 var unbanObj = {user: banmate, room: $scope.roomID};
@@ -169,16 +179,16 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                 socket.emit('op', opObj, function(allowed) {
                     // TODO! => maybe ask the user if he is sure he want to op the mate??
                     if(!allowed) {
-                        alert("You have to be OP to promote a mate!");
                     }
                 });
             };
 
         }]);
 
-chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$location', 'socket',
-        function ($scope, $routeParams, $location, socket) {
+chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$location', 'socket', '$route',
+        function ($scope, $routeParams, $location, socket, $route) {
             $scope.currentUser = $routeParams.userID;
+
             socket.emit('rooms');
             socket.on('roomlist', function(data) {
                 $scope.rooms = Object.keys(data);
@@ -222,6 +232,13 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
                 });
 
             };
+
+            socket.on('unbanned', function(room, unbannedUser, username) {
+                if(unbannedUser === $scope.currentUser) {
+                    $route.reload();
+                }
+            });
+
         }]);
 
 
