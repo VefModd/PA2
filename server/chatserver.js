@@ -284,6 +284,7 @@ io.sockets.on('connection', function (socket) {
             io.sockets.emit('updatebanlist', rooms[unbanObj.room].banned);
             io.sockets.emit('updateusers', unbanObj.room, rooms[unbanObj.room].users, rooms[unbanObj.room].ops);
             io.sockets.emit('unbanned', unbanObj.room, unbanObj.user, socket.username);
+            io.sockets.emit('unbanneduser', unbanObj.room, unbanObj.user, socket.username);
             fn(true);
         }
         fn(false);

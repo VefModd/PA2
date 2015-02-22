@@ -159,6 +159,17 @@ angularChat.controller('RoomController', ['$scope', '$routeParams', 'socket', '$
                 }
             });
 
+            $scope.promotedMessage = '';
+            console.log("promtemess: ", $scope.promotedMessage);
+
+            socket.on('opped', function(room, oppedUser, username) {
+                if(oppedUser === $scope.currentUser) {
+                    $scope.promotedMessage = 'You got promoted by ' + username + '!';
+                    console.log("inside here!!");
+                    console.log("promtemess: ", $scope.promotedMessage);
+                }
+            });
+
             $scope.unban = function(banmate) {
                 var unbanObj = {user: banmate, room: $scope.roomID};
                 socket.emit('unban', unbanObj, function(allowed) {
@@ -231,10 +242,18 @@ angularChat.controller('RoomsController', ['$scope', '$routeParams', '$location'
 
             $scope.bannedMessage = '';
             $scope.kickedMessage = '';
+            $scope.unbanMessage = '';
+            console.log("yes", $scope.unbanMessage);
 
             socket.on('unbanned', function(room, unbannedUser, username) {
                 if(unbannedUser === $scope.currentUser) {
                     $route.reload();
+                }
+            });
+
+            socket.on('unbanneduser', function(room, unbannedUser, username) {
+                if(unbannedUser === $scope.currentUser) {
+                    $scope.unbanMessage = 'You just got unbanned from ' + room + ' by ' + username + '.';
                 }
             });
 
