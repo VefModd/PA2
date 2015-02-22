@@ -1,5 +1,23 @@
 var chatControllers = angular.module('chatControllers', []);
 
+// Filter to filter private messages between users
+angular.module('myFilters', []).
+filter('prvtChat', function() {
+    return function(messages, sender, reciever) {
+        var out = [];
+        for(var i = 0; i < messages.length; i++) {
+            if(messages[i].prvt) {
+                // Filter out messages that are not between the sender and reciever
+                if((messages[i].nick === sender && messages[i].recipient === reciever) || 
+                    (messages[i].recipient === sender && messages[i].nick === reciever)) {
+                    out.push(messages[i]);
+                }
+            }
+        };
+        return out;
+    };
+});
+
 chatControllers.controller('HomeController', ['$scope', '$http', '$location', '$rootScope', '$routeParams', 'socket',
         function ($scope, $http, $location, $rootScope, $routeParams, socket) {
             $scope.errorMsg = '';
@@ -30,31 +48,30 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
             });
 
             $scope.filt = $scope.query;
-            var p_messages = [];
+            $scope.prvtMessages = [];
+            $scope.messages = [];
+            $scope.msg_recipient = "";
+            $scope.newMessage = false;
 
             socket.on('updatechat', function(room, messageHistory) {
-                $scope.messages = p_messages.concat(messageHistory);
-                console.log("messages: ", $scope.messages);
+                $scope.messages = messageHistory;
             });
 
-            socket.on('recv_privatemsg', function(message) {
-                p_messages.push(message);
-                $scope.messages = $scope.messages.concat(message);
-                console.log("PM: ", p_messages);
-                console.log("recieved PM: ", message);
+            socket.on('recv_privatemsg', function(messageHistoryPrivate) {
+                if(messageHistoryPrivate[messageHistoryPrivate.length -1].recipient === $scope.currentUser) {
+                    console.log("NEW MESSAGE FOR YOU!");
+                    $scope.newMessage = true;
+                    $scope.msg_recipient = messageHistoryPrivate[messageHistoryPrivate.length -1].nick;
+                }
+                $scope.prvtMessages = messageHistoryPrivate;
             });
 
             socket.on('updateusers', function(room, userList, opList) {
-                console.log("usrs: ", userList);
-                console.log("ops: ", opList);
                 if($scope.roomID === room) {
                     $scope.roommates = Object.keys(userList);
                     $scope.roomops = Object.keys(opList);
                     $scope.opObj = opList;
                 }
-                
-                console.log("opObj: ", $scope.opObj);
-                console.log("room!!: ", room);
             });
 
             socket.on('updatebanlist', function(banlist) {
@@ -65,9 +82,8 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
             $scope.inputMsg = "";
 
             $scope.sendMsg = function() {
-                console.log("inside sendMSg");
                 if($scope.inputMsg === '') {
-                    console.log("inputmsg = ''");
+                    // TODO ERROR
                 } else {
                     console.log($scope.roomID);
                     var input = {roomName: $scope.roomID, msg: $scope.inputMsg};
@@ -79,10 +95,12 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
             $scope.inputPrvtMsg = "";
 
             $scope.set_recipient = function(recipient) {
+                $scope.newMessage = false;
                 $scope.msg_recipient = recipient;
             };
 
-            $scope.prvt_msg = function() {
+            $scope.sendPrvtMsg = function() {
+                $scope.newMessage = false;
                 if($scope.inputPrvtMsg !== "") {
                     var msg = {
                         nick : $scope.msg_recipient,
@@ -90,6 +108,7 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
                     };
                     socket.emit('privatemsg', msg, function(sent) {
                         if(sent) {
+                            // TODO : ERROR!
                             $scope.inputPrvtMsg = "";
                             console.log("PM: Success");
                         } else {
@@ -237,3 +256,5 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
 
 
         }]);
+
+

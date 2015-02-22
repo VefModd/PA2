@@ -10,6 +10,9 @@ server.listen(8080);
 var rooms = {};
 //Global user object, since we want to know what rooms each user is in etc.
 var users = {};
+//Global all private messages
+var messageHistoryPrivate = [];
+
 
 //Default room.
 rooms.lobby = new Room();
@@ -149,12 +152,16 @@ io.sockets.on('connection', function (socket) {
         if(users[msgObj.nick] !== undefined) {
             //Send the message only to this user.
             var msgObjSend = {
-                nick : socket.username,
+                nick: socket.username,
+                recipient: msgObj.nick,
                 timestamp : new Date(),
-                message : msgObj.message.substring(200, 0),
+                message : msgObj.message.substring(0, 200),
                 prvt : true
             };
-            users[msgObj.nick].socket.emit('recv_privatemsg', msgObjSend);
+            messageHistoryPrivate.push(msgObjSend);
+            // Send the private message to both the sender and the recipient.
+            users[msgObjSend.recipient].socket.emit('recv_privatemsg', messageHistoryPrivate);
+            users[msgObjSend.nick].socket.emit('recv_privatemsg', messageHistoryPrivate);
             //Callback recieves true.
             fn(true);
         }
