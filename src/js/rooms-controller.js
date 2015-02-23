@@ -40,9 +40,7 @@ angular.module('angularChat').controller('RoomsController', ['$scope', '$routePa
                         $location.path('/room/' + $scope.currentUser + '/' + joinObj.room);
                     }
                 });
-
             };
-
 
             $scope.disconnect = function() {
                 socket.emit('disco-nnects');
@@ -76,7 +74,4 @@ angular.module('angularChat').controller('RoomsController', ['$scope', '$routePa
                     $scope.kickedMessage = 'You just got kicked from ' + room + ' by ' + username + '.';
                 }
             });
-
-
         }]);
-
