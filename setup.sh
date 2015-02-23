@@ -1,5 +1,5 @@
 #!/bin/bash
-bower intsll -d
+bower install -d
 npm install -d
 grunt concat
 grunt uglify
