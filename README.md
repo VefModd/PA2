@@ -1,4 +1,6 @@
-# AngularChat
+# Angular Chat
+
+### Authors
 Daníel Benediktsson, Jón Freysteinn Jónsson and Jörundur Jörundsson
 
 ## Setup
