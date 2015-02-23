@@ -1,4 +1,4 @@
-chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$location', 'socket', '$route',
+angularChat.controller('RoomsController', ['$scope', '$routeParams', '$location', 'socket', '$route',
         function ($scope, $routeParams, $location, socket, $route) {
             $scope.currentUser = $routeParams.userID;
 
@@ -47,10 +47,18 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
 
             $scope.bannedMessage = '';
             $scope.kickedMessage = '';
+            $scope.unbanMessage = '';
+            console.log("yes", $scope.unbanMessage);
 
             socket.on('unbanned', function(room, unbannedUser, username) {
                 if(unbannedUser === $scope.currentUser) {
                     $route.reload();
+                }
+            });
+
+            socket.on('unbanneduserfeedback', function(room, unbannedUser, username) {
+                if(unbannedUser === $scope.currentUser) {
+                    $scope.unbanMessage = 'You just got unbanned from ' + room + ' by ' + username + '.';
                 }
             });
 
@@ -60,9 +68,12 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
                 }
             });
 
-            socket.on('kickeduser', function(room, kickeduser, username) {
+            socket.on('kickeduserfeedback', function(room, kickeduser, username) {
                 if(kickeduser === $scope.currentUser) {
                     $scope.kickedMessage = 'You just got kicked from ' + room + ' by ' + username + '.';
                 }
             });
+
+
         }]);
+
