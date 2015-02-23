@@ -99,7 +99,6 @@ filter('prvtChat', function() {
 
             socket.on('updatebanlist', function(banlist) {
                 $scope.banlist = banlist;
-                console.log("banlist: ", banlist);
             });
 
             $scope.inputMsg = "";
@@ -108,7 +107,6 @@ filter('prvtChat', function() {
                 if($scope.inputMsg === '') {
                     // TODO ERROR
                 } else {
-                    console.log($scope.roomID);
                     var input = {roomName: $scope.roomID, msg: $scope.inputMsg};
                     socket.emit('sendmsg', input);
                 }
@@ -133,9 +131,7 @@ filter('prvtChat', function() {
                         if(sent) {
                             // TODO : ERROR!
                             $scope.inputPrvtMsg = "";
-                            console.log("PM: Success");
                         } else {
-                            console.log("PM: Failure");
                         }
                     });
                 }
@@ -163,25 +159,14 @@ filter('prvtChat', function() {
 
             $scope.kick = function(mate) {
                 $scope.userKicked = mate;
-                console.log("mate: ", mate);
-
                 var kickObj = {user: mate, room: $scope.roomID};
-                socket.emit('kick', kickObj, function(allowed) {
-                    // TODO! => maybe ask the user if he is sure he want to kick the mate??
-                    if(!allowed) {
-                    }
-                });
+                socket.emit('kick', kickObj);
             };
 
             $scope.ban = function(mate) {
                 $scope.userBanned = mate;
-                console.log("mate: ", mate);
                 var banObj = {user: mate, room: $scope.roomID};
-                socket.emit('ban', banObj, function(allowed) {
-                    // TODO! => maybe ask the user if he is sure he want to ban the mate??
-                    if(!allowed) {
-                    }
-                });
+                socket.emit('ban', banObj);
             };
 
             socket.on('banned', function(room, bannedUser, username) {
@@ -197,34 +182,22 @@ filter('prvtChat', function() {
             });
 
             $scope.promotedMessage = '';
-            console.log("promtemess: ", $scope.promotedMessage);
 
             socket.on('opped', function(room, oppedUser, username) {
                 if(oppedUser === $scope.currentUser) {
                     $scope.promotedMessage = 'You got promoted by ' + username + '!';
-                    console.log("inside here!!");
-                    console.log("promtemess: ", $scope.promotedMessage);
                 }
             });
 
             $scope.unban = function(banmate) {
                 var unbanObj = {user: banmate, room: $scope.roomID};
-                socket.emit('unban', unbanObj, function(allowed) {
-                    if(!allowed) {
-                        // TODO
-                    }
-                });
+                socket.emit('unban', unbanObj);
             };
 
             $scope.promote = function(mate) {
                 $scope.userPromoted = mate;
-                console.log("mate: ", mate);
-
                 var opObj = {user: mate, room: $scope.roomID};
-                socket.emit('op', opObj, function(allowed) {
-                    if(!allowed) {
-                    }
-                });
+                socket.emit('op', opObj);
             };
 
         }]);
@@ -284,7 +257,6 @@ filter('prvtChat', function() {
             $scope.bannedMessage = '';
             $scope.kickedMessage = '';
             $scope.unbanMessage = '';
-            console.log("yes", $scope.unbanMessage);
 
             socket.on('unbanned', function(room, unbannedUser, username) {
                 if(unbannedUser === $scope.currentUser) {

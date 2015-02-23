@@ -95,23 +95,14 @@ angular.module('angularChat').controller('RoomController', ['$scope', '$routePar
 
             $scope.kick = function(mate) {
                 $scope.userKicked = mate;
-
                 var kickObj = {user: mate, room: $scope.roomID};
-                socket.emit('kick', kickObj, function(allowed) {
-                    // TODO! => maybe ask the user if he is sure he want to kick the mate??
-                    if(!allowed) {
-                    }
-                });
+                socket.emit('kick', kickObj);
             };
 
             $scope.ban = function(mate) {
                 $scope.userBanned = mate;
                 var banObj = {user: mate, room: $scope.roomID};
-                socket.emit('ban', banObj, function(allowed) {
-                    // TODO! => maybe ask the user if he is sure he want to ban the mate??
-                    if(!allowed) {
-                    }
-                });
+                socket.emit('ban', banObj);
             };
 
             socket.on('banned', function(room, bannedUser, username) {
@@ -136,21 +127,13 @@ angular.module('angularChat').controller('RoomController', ['$scope', '$routePar
 
             $scope.unban = function(banmate) {
                 var unbanObj = {user: banmate, room: $scope.roomID};
-                socket.emit('unban', unbanObj, function(allowed) {
-                    if(!allowed) {
-                        // TODO
-                    }
-                });
+                socket.emit('unban', unbanObj);
             };
 
             $scope.promote = function(mate) {
                 $scope.userPromoted = mate;
-
                 var opObj = {user: mate, room: $scope.roomID};
-                socket.emit('op', opObj, function(allowed) {
-                    if(!allowed) {
-                    }
-                });
+                socket.emit('op', opObj);
             };
 
         }]);
