@@ -251,19 +251,19 @@ angularChat.controller('RoomsController', ['$scope', '$routeParams', '$location'
                 }
             });
 
-            socket.on('unbanneduser', function(room, unbannedUser, username) {
+            socket.on('unbanneduserfeedback', function(room, unbannedUser, username) {
                 if(unbannedUser === $scope.currentUser) {
                     $scope.unbanMessage = 'You just got unbanned from ' + room + ' by ' + username + '.';
                 }
             });
 
-            socket.on('banneduser', function(room, bannedUser, username) {
+            socket.on('banneduserfeedback', function(room, bannedUser, username) {
                 if(bannedUser === $scope.currentUser) {
                     $scope.bannedMessage = 'You just got banned from ' + room + ' by ' + username + '.';
                 }
             });
 
-            socket.on('kickeduser', function(room, kickeduser, username) {
+            socket.on('kickeduserfeedback', function(room, kickeduser, username) {
                 if(kickeduser === $scope.currentUser) {
                     $scope.kickedMessage = 'You just got kicked from ' + room + ' by ' + username + '.';
                 }

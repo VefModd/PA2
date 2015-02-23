@@ -54,7 +54,7 @@ chatControllers.controller('RoomsController', ['$scope', '$routeParams', '$locat
                 }
             });
 
-            socket.on('banneduser', function(room, bannedUser, username) {
+            socket.on('banneduserfeedback', function(room, bannedUser, username) {
                 if(bannedUser === $scope.currentUser) {
                     $scope.bannedMessage = 'You just got banned from ' + room + ' by ' + username + '.';
                 }
