@@ -54,7 +54,6 @@ angular.module('angularChat').controller('RoomsController', ['$scope', '$routePa
             $scope.bannedMessage = '';
             $scope.kickedMessage = '';
             $scope.unbanMessage = '';
-            console.log("yes", $scope.unbanMessage);
 
             socket.on('unbanned', function(room, unbannedUser, username) {
                 if(unbannedUser === $scope.currentUser) {

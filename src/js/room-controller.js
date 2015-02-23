@@ -35,7 +35,6 @@ angular.module('angularChat').controller('RoomController', ['$scope', '$routePar
 
             socket.on('updatebanlist', function(banlist) {
                 $scope.banlist = banlist;
-                console.log("banlist: ", banlist);
             });
 
             $scope.inputMsg = "";
@@ -44,7 +43,6 @@ angular.module('angularChat').controller('RoomController', ['$scope', '$routePar
                 if($scope.inputMsg === '') {
                     // TODO ERROR
                 } else {
-                    console.log($scope.roomID);
                     var input = {roomName: $scope.roomID, msg: $scope.inputMsg};
                     socket.emit('sendmsg', input);
                 }
@@ -69,9 +67,7 @@ angular.module('angularChat').controller('RoomController', ['$scope', '$routePar
                         if(sent) {
                             // TODO : ERROR!
                             $scope.inputPrvtMsg = "";
-                            console.log("PM: Success");
                         } else {
-                            console.log("PM: Failure");
                         }
                     });
                 }
@@ -99,7 +95,6 @@ angular.module('angularChat').controller('RoomController', ['$scope', '$routePar
 
             $scope.kick = function(mate) {
                 $scope.userKicked = mate;
-                console.log("mate: ", mate);
 
                 var kickObj = {user: mate, room: $scope.roomID};
                 socket.emit('kick', kickObj, function(allowed) {
@@ -111,7 +106,6 @@ angular.module('angularChat').controller('RoomController', ['$scope', '$routePar
 
             $scope.ban = function(mate) {
                 $scope.userBanned = mate;
-                console.log("mate: ", mate);
                 var banObj = {user: mate, room: $scope.roomID};
                 socket.emit('ban', banObj, function(allowed) {
                     // TODO! => maybe ask the user if he is sure he want to ban the mate??
@@ -133,13 +127,10 @@ angular.module('angularChat').controller('RoomController', ['$scope', '$routePar
             });
 
             $scope.promotedMessage = '';
-            console.log("promtemess: ", $scope.promotedMessage);
 
             socket.on('opped', function(room, oppedUser, username) {
                 if(oppedUser === $scope.currentUser) {
                     $scope.promotedMessage = 'You got promoted by ' + username + '!';
-                    console.log("inside here!!");
-                    console.log("promtemess: ", $scope.promotedMessage);
                 }
             });
 
@@ -154,7 +145,6 @@ angular.module('angularChat').controller('RoomController', ['$scope', '$routePar
 
             $scope.promote = function(mate) {
                 $scope.userPromoted = mate;
-                console.log("mate: ", mate);
 
                 var opObj = {user: mate, room: $scope.roomID};
                 socket.emit('op', opObj, function(allowed) {

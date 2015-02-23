@@ -39,20 +39,14 @@ io.sockets.on('connection', function (socket) {
     //When a user joins a room this processes the request.
     socket.on('joinroom', function (joinObj, fn) {
 
-        console.log("Inside joinroom!");
-
         var room = joinObj.room;
         var pass = joinObj.pass;
         var topic = joinObj.topic;
         var accepted = true;
         var reason;
 
-        console.log("room:",  room);
-        console.log("joinObj.room:", joinObj.room);
-
         //If the room does not exist
         if(rooms[room] === undefined) {
-            console.log("Inside if in joinroom!");
             rooms[room] = new Room();
             //Op the user if he creates the room.
             rooms[room].ops[socket.username] = socket.username;
@@ -76,8 +70,6 @@ io.sockets.on('connection', function (socket) {
             }, 150);
         }
         else {
-
-            console.log("Inside else in joinroom!");
 
             //If the room isn't locked we set accepted to true.
             if(rooms[room].locked === false) {
@@ -298,7 +290,6 @@ io.sockets.on('connection', function (socket) {
 
     //Returns a list of all avaliable rooms.
     socket.on('rooms', function() {
-        console.log("emitting rooms!!!");
         io.sockets.emit('roomlist', rooms);
     });
 
@@ -362,7 +353,6 @@ function Room() {
         this.password = "",
 
     this.addUser = function(user) {
-        console.log("Adding a user!!");
         (user !== undefined) ? this.users[user] = user : console.log("ERROR: add user");
     };
 
