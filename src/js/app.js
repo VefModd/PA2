@@ -1,8 +1,8 @@
-var angularChat = angular.module('angularChat', [
+angular.module('angularChat', [
   'ngRoute'
 ]);
 
-angularChat.config(['$routeProvider',
+angular.module('angularChat').config(['$routeProvider',
 	function($routeProvider) {
         $routeProvider.
       	when('/home', {

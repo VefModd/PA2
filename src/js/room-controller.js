@@ -1,4 +1,4 @@
-angularChat.controller('RoomController', ['$scope', '$routeParams', 'socket', '$location', '$route',
+angular.module('angularChat').controller('RoomController', ['$scope', '$routeParams', 'socket', '$location', '$route',
         function ($scope, $routeParams, socket, $location, $route) {
             $scope.roomID = $routeParams.roomID;
             $scope.currentUser = $routeParams.userID;
@@ -82,6 +82,11 @@ angularChat.controller('RoomController', ['$scope', '$routeParams', 'socket', '$
                 $location.path('/rooms/' + $routeParams.userID);
             };
 
+            $scope.disconnect = function() {
+                socket.emit('disco-nnects');
+                $location.path('/home');
+            };
+
             $scope.$on('$destroy', function() {
                 $scope.leave();
             });
@@ -147,28 +152,9 @@ angularChat.controller('RoomController', ['$scope', '$routeParams', 'socket', '$
 
                 var opObj = {user: mate, room: $scope.roomID};
                 socket.emit('op', opObj, function(allowed) {
-                    // TODO! => maybe ask the user if he is sure he want to op the mate??
                     if(!allowed) {
                     }
                 });
             };
 
         }]);
-
-// Filter to filter private messages between users
-chatControllers.controller('RoomController').
-filter('prvtChat', function() {
-    return function(messages, sender, reciever) {
-        var out = [];
-        for(var i = 0; i < messages.length; i++) {
-            if(messages[i].prvt) {
-                // Filter out messages that are not between the sender and reciever
-                if((messages[i].nick === sender && messages[i].recipient === reciever) || 
-                    (messages[i].recipient === sender && messages[i].nick === reciever)) {
-                    out.push(messages[i]);
-                }
-            }
-        }
-        return out;
-    };
-});

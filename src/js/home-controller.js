@@ -1,4 +1,4 @@
-chatControllers.controller('HomeController', ['$scope', '$http', '$location', '$rootScope', '$routeParams', 'socket',
+angular.module('angularChat').controller('HomeController', ['$scope', '$http', '$location', '$rootScope', '$routeParams', 'socket',
         function ($scope, $http, $location, $rootScope, $routeParams, socket) {
             $scope.errorMsg = '';
             $scope.nickname = '';

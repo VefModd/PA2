@@ -1,4 +1,4 @@
-angularChat.controller('RoomsController', ['$scope', '$routeParams', '$location', 'socket', '$route',
+angular.module('angularChat').controller('RoomsController', ['$scope', '$routeParams', '$location', 'socket', '$route',
         function ($scope, $routeParams, $location, socket, $route) {
             $scope.currentUser = $routeParams.userID;
 
@@ -43,6 +43,12 @@ angularChat.controller('RoomsController', ['$scope', '$routeParams', '$location'
                     }
                 });
 
+            };
+
+
+            $scope.disconnect = function() {
+                socket.emit('disco-nnects');
+                $location.path('/home');
             };
 
             $scope.bannedMessage = '';

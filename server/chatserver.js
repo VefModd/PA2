@@ -170,14 +170,16 @@ io.sockets.on('connection', function (socket) {
 
     //When a user leaves a room this gets performed.
     socket.on('partroom', function (room) {
-        //remove the user from the room roster and room op roster.
-        delete rooms[room].users[socket.username];
-        delete rooms[room].ops[socket.username];
-        //Remove the channel from the user object in the global user roster.
-        delete users[socket.username].channels[room];
-        //Update the userlist in the room.
-        io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
-        io.sockets.emit('servermessage', "part", room, socket.username);
+        if(users[socket.username] !== undefined) {
+            //remove the user from the room roster and room op roster.
+            delete rooms[room].users[socket.username];
+            delete rooms[room].ops[socket.username];
+            //Remove the channel from the user object in the global user roster.
+            delete users[socket.username].channels[room];
+            //Update the userlist in the room.
+            io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
+            io.sockets.emit('servermessage', "part", room, socket.username);
+        }
     });
 
     // when the user disconnects.. perform this
