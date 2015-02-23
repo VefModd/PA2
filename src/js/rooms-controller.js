@@ -38,8 +38,6 @@ angular.module('angularChat').controller('RoomsController', ['$scope', '$routePa
                     if(accepted) {
                         socket.emit('rooms');
                         $location.path('/room/' + $scope.currentUser + '/' + joinObj.room);
-                    } else {
-                        // TODO ERROR MESSAGE
                     }
                 });
 
