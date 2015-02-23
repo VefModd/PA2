@@ -243,9 +243,7 @@ filter('prvtChat', function() {
                         $location.path('/room/' + $scope.currentUser + '/' + joinObj.room);
                     }
                 });
-
             };
-
 
             $scope.disconnect = function() {
                 socket.emit('disco-nnects');
@@ -279,11 +277,7 @@ filter('prvtChat', function() {
                     $scope.kickedMessage = 'You just got kicked from ' + room + ' by ' + username + '.';
                 }
             });
-
-
-        }]);
-
-;// Factory to wrap around the socket functions
+        }]);;// Factory to wrap around the socket functions
 // Borrowed from Brian Ford
 // http://briantford.com/blog/angular-socket-io.html
 angular.module('angularChat').factory('socket', function ($rootScope) {

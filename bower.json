@@ -1,0 +1,24 @@
+{
+  "name": "angularchat",
+  "version": "0.0.0",
+  "homepage": "https://github.com/VefModd/PA2",
+  "authors": [
+    "Daniel Benediktsson, Jón Freysteinn Jónssson, Jörundur Jörundsson"
+  ],
+  "description": "WEPO project",
+  "main": "app.js",
+  "license": "ISC",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "~1.3.12",
+    "bootstrap": "~3.3.2",
+    "angular": "~1.3.12"
+  }
+}
