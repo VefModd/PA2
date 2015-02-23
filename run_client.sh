@@ -1,5 +1,3 @@
 #!/bin/bash
-if [[ -n $1 ]]; then
-	python -m SimpleHTTPServer $1
-fi
+python -m SimpleHTTPServer 8088
 

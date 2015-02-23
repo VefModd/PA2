@@ -51,51 +51,51 @@
             <div class="panel-body">
                 <input class="form-control" ng-model="query" placeholder="Search mates...">
                 <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="op in roomops | filter:query">
+                    <li class="list-group-item"  ng-class="{true:'list-group-item-info', false:''}[op == currentUser]" ng-repeat="op in roomops | filter:query">
                     <i class="glyphicon glyphicon-king"></i>{{ op }}
                     <div class="pull-right">
                         <button type="button" data-toggle="modal" data-target=".pm_modal" class="btn btn-xs" ng-class="{true:'btn-warning', false:'btn-info'}[newMessage == true&& msg_recipient == op]" ng-click="set_recipient(op)"><i class="glyphicon glyphicon-envelope"></i></button>
                     </div>
-                    </button>
-                    </li>
-                </ul>
-                <ul class="list-group">
-                    <li class="list-group-item" ng-class="{true:'list-group-item-info', false:''}[mate == currentUser]" ng-repeat="mate in roommates | filter:query">
-                    {{ mate }}
-                    <div class="pull-right">
-                        <button type="button" data-toggle="modal" data-target=".pm_modal" class="btn btn-xs" ng-class="{true:'btn-warning', false:'btn-info'}[newMessage == true&& msg_recipient == mate]" ng-click="set_recipient(mate)">
-                            <i class="glyphicon glyphicon-envelope"></i>
-                        </button>
-                        <button type="button" class="btn btn-success btn-xs" ng-click="promote(mate)" ng-show="opObj[currentUser] !== undefined">
-                            Promote
-                        </button>
-                        <button type="button" class="btn btn-warning btn-xs" ng-click="kick(mate)" ng-show="opObj[currentUser] !== undefined">
-                            Kick
-                        </button>
-                        <button type="button" class="btn btn-danger btn-xs" ng-click="ban(mate)" ng-show="opObj[currentUser] !== undefined">
-                            Ban
-                        </button>
-                    </div>
-                    </li>
-                </ul>
-
-                <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="banmate in banlist | filter:query" ng-show="opObj[currentUser] !== undefined">
-                    {{ banmate }}
-                    <div class="pull-right">
-                        <button type="button" class="btn btn-danger btn-xs" ng-click="unban(banmate)">
-                            Unban
-                        </button>
-                    </div>
-                    </li>
-                </ul>
-                <div class="pull-left">
-                    <button type="button" class="btn btn-primary" ng-click="leave()">Leave room</button>
-                </div>
+                </button>
+                </li>
+            </ul>
+            <ul class="list-group">
+                <li class="list-group-item" ng-class="{true:'list-group-item-info', false:''}[mate == currentUser]" ng-repeat="mate in roommates | filter:query">
+                {{ mate }}
                 <div class="pull-right">
-                    <button type="button" class="btn btn-danger" ng-click="disconnect()">Disconnect</button>
+                    <button type="button" data-toggle="modal" data-target=".pm_modal" class="btn btn-xs" ng-class="{true:'btn-warning', false:'btn-info'}[newMessage == true&& msg_recipient == mate]" ng-click="set_recipient(mate)">
+                        <i class="glyphicon glyphicon-envelope"></i>
+                    </button>
+                    <button type="button" class="btn btn-success btn-xs" ng-click="promote(mate)" ng-show="opObj[currentUser] !== undefined">
+                        Promote
+                    </button>
+                    <button type="button" class="btn btn-warning btn-xs" ng-click="kick(mate)" ng-show="opObj[currentUser] !== undefined">
+                        Kick
+                    </button>
+                    <button type="button" class="btn btn-danger btn-xs" ng-click="ban(mate)" ng-show="opObj[currentUser] !== undefined">
+                        Ban
+                    </button>
                 </div>
+                </li>
+            </ul>
+
+            <ul class="list-group" ng-show="opObj[currentUser] !== undefined">
+                <li class="list-group-item" ng-repeat="banmate in banlist">
+                {{ banmate }}
+                <div class="pull-right">
+                    <button type="button" class="btn btn-danger btn-xs" ng-click="unban(banmate)">
+                        Unban
+                    </button>
+                </div>
+                </li>
+            </ul>
+            <div class="pull-left">
+                <button type="button" class="btn btn-primary" ng-click="leave()">Leave room</button>
             </div>
+            <div class="pull-right">
+                <button type="button" class="btn btn-danger" ng-click="disconnect()">Disconnect</button>
+            </div>
+        </div>
         </div>
     </div>
 
