@@ -169,7 +169,7 @@ io.sockets.on('connection', function (socket) {
     });
 
     //When a user leaves a room this gets performed.
-    socket.on('partroom', function (room) {
+    socket.on('partroom', function (room, fn) {
         if(users[socket.username] !== undefined) {
             //remove the user from the room roster and room op roster.
             delete rooms[room].users[socket.username];
@@ -179,6 +179,10 @@ io.sockets.on('connection', function (socket) {
             //Update the userlist in the room.
             io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
             io.sockets.emit('servermessage', "part", room, socket.username);
+            fn(true);
+        }
+        else {
+            fn(false);
         }
     });
 

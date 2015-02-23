@@ -142,8 +142,14 @@ filter('prvtChat', function() {
             };
 
             $scope.leave = function () {
-                socket.emit('partroom', $scope.roomID);
-                $location.path('/rooms/' + $routeParams.userID);
+                socket.emit('partroom', $scope.roomID, function(succeed) {
+                    if(succeed) {
+                        $location.path('/rooms/' + $routeParams.userID);
+                    } else {
+                        $location.path('/home');
+                    }
+                });
+                
             };
 
             $scope.disconnect = function() {
