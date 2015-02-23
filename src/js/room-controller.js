@@ -1,4 +1,4 @@
-chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket', '$location', '$route',
+angularChat.controller('RoomController', ['$scope', '$routeParams', 'socket', '$location', '$route',
         function ($scope, $routeParams, socket, $location, $route) {
             $scope.roomID = $routeParams.roomID;
             $scope.currentUser = $routeParams.userID;
@@ -118,6 +118,17 @@ chatControllers.controller('RoomController', ['$scope', '$routeParams', 'socket'
             socket.on('kicked', function(room, kickedUser, username) {
                 if(kickedUser == $scope.currentUser) {
                     $location.path('/rooms/' + kickedUser);
+                }
+            });
+
+            $scope.promotedMessage = '';
+            console.log("promtemess: ", $scope.promotedMessage);
+
+            socket.on('opped', function(room, oppedUser, username) {
+                if(oppedUser === $scope.currentUser) {
+                    $scope.promotedMessage = 'You got promoted by ' + username + '!';
+                    console.log("inside here!!");
+                    console.log("promtemess: ", $scope.promotedMessage);
                 }
             });
 
