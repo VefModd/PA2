@@ -93,8 +93,13 @@ io.sockets.on('connection', function (socket) {
             if(accepted) {
                 //We need to let the server know beforehand so that he starts to prepare the client template.
                 fn(true);
-                //Add user to room.
-                rooms[room].addUser(socket.username);
+                //Add user to room, op if room is empty.
+                if((Object.keys(rooms[room].users).length === 0) && (Object.keys(rooms[room].ops).length === 0)) {
+                    rooms[room].ops[socket.username] = socket.username;
+                } else {
+                    rooms[room].addUser(socket.username);
+                }
+                
                 //Keep track of the room in the user object.
                 users[socket.username].channels[room] = room;
                 //Send the room information to the client.
